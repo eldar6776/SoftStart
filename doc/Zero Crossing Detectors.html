@@ -1,0 +1,1685 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0039)https://sound-au.com/appnotes/an005.htm -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="canonical" href="https://sound-au.com/appnotes/an005.htm">
+  <script type="text/javascript" charset="UTF-8" src="./Zero Crossing Detectors_files/c4306502fb5f29fb4e9801f5080fb662.js.download"></script><style>undefined</style>
+	
+	<meta name="Author" content="Rod Elliott - Elliott Sound Products">
+	<meta name="keywords" content="zero, crossing, detector, ac, alternating, current, comparator, speed, phase, distortion, displacement, analog, analogue, instrument,measure, instrumentation, diy, circuit, schematic, diagram">
+	<meta name="description" content="ESP Application Notes - Zero Crossing Detectors">
+	<!-- ESP  Application Notes - Zero Crossing Detectors -->
+	<title>Zero Crossing Detectors</title>
+	<link rel="StyleSheet" href="./Zero Crossing Detectors_files/esp.css" type="text/css" media="screen, print">
+	<link rel="shortcut icon" type="image/ico" href="https://sound-au.com/appnotes/favicon.ico">
+	<style>
+		#pgbtn {
+		display: none; position: fixed; bottom: 20px; right: 30px; z-index: 99; font-size: 12px;
+		border: none; outline: none; background-color: blue; color: white; cursor: pointer;
+		padding: 15px; border-radius: 4px; }
+	#pgbtn:hover { background-color: #555; }
+	</style>
+
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-1947877433449191",
+          enable_page_level_ads: true
+     });
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="use-credentials"><link rel="preconnect" href="https://fonts.gstatic.com/"><link rel="stylesheet" href="./Zero Crossing Detectors_files/css2"></head>
+<body data-new-gr-c-s-check-loaded="14.1185.0" data-gr-ext-installed="">
+<table style="width:100%"><tbody><tr><td><img src="./Zero Crossing Detectors_files/esp.jpg" alt="ESP Logo" height="81" width="215">
+</td><td align="right">
+
+<script async="" src="./Zero Crossing Detectors_files/f.txt"></script>
+	<!-- 468x60, created 20/08/10 -->
+	<ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px" data-ad-client="ca-pub-1947877433449191" data-ad-slot="7119701939"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</td></tr></tbody></table>
+
+<table style="width:100%" class="tblblue"><tbody><tr><td class="hdrl">&nbsp;Elliott Sound Products</td>
+<td align="right" class="hdrr">AN-005&nbsp;</td></tr></tbody></table>
+
+<h1>Zero Crossing Detectors and Comparators</h1>
+<div class="t_12" align="center">(The Unsung Heroes of Modern Electronics Design)<br>Rod Elliott (ESP)<br>
+Last Updated March 2024</div>
+
+<button onclick="topFunction()" id="pgbtn" title="Go to top" style="display: block;">Top</button>
+<script>
+	// When the user scrolls down 20px from the top of the document, show the button
+	window.onscroll = function() {scrollFunction()};
+
+	function scrollFunction() {
+		if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30)
+		{ document.getElementById("pgbtn").style.display = "block"; }
+		else { document.getElementById("pgbtn").style.display = "none"; }}
+
+	// When the user clicks on the button, scroll to the top of the document
+	function topFunction() {
+		document.body.scrollTop = 0;
+		document.documentElement.scrollTop = 0; }
+</script>
+
+<!-- AddThis Button BEGIN -->
+	<div class="addthis_inline_share_toolbox"></div>
+<!-- AddThis Button END -->
+
+<hr>
+<table>
+	<tbody><tr><td width="300"><span class="imgswap"><a href="https://sound-au.com/index.html" style="display:block;"><img src="./Zero Crossing Detectors_files/a1.gif" alt="Home"><b class="bb">Main Index</b></a></span>
+	<span class="imgswap"><a href="https://sound-au.com/appnotes/index.html" style="display:block;"><img src="./Zero Crossing Detectors_files/a1.gif" alt="app notes"><b class="bb">App. Notes Index</b></a></span>
+</td></tr></tbody></table>
+
+<hr><b>Introduction</b><br>
+<p>Zero crossing detectors as a group are not a well-understood application, although they are essential elements in a wide range of products.&nbsp; It has probably escaped the notice of readers who have looked at the lighting controller or the Linkwitz Cosine Burst Generator (both are on the ESP website), but these rely on a zero crossing detector for their operation.&nbsp; So too does the ESP Tone Burst Generator project.</p>
+
+<p>A zero crossing detector (ZCD) literally detects the transition of a signal waveform from positive to negative (and vice versa), ideally providing a narrow pulse that coincides exactly with the zero voltage condition.&nbsp; At first glance, this would appear to be an easy enough task, but in fact it is quite complex, especially where high frequencies are involved.&nbsp; In this instance, even 1kHz starts to present a real challenge if extreme accuracy is needed.</p>
+
+<p>The not so humble comparator plays a vital role - without it, most precision zero crossing detectors would not work, and we'd be without digital audio, PWM and a multitude of other applications that are perhaps taken for granted.</p>
+
+<p>If you search the Net for zero crossing detectors, you will see a multitude of circuits suggesting the venerable µA741.&nbsp; The circuits will work, but the 741 is several orders of magnitude too slow to be even remotely usable at frequencies above perhaps 100Hz or so.&nbsp; The slew rate of a µA741 is 0.5V/µs - it's one of the slowest opamps around.&nbsp; In all cases, the 741 should be replaced with something considerably faster, such as an uncompensated LM301 or a 'real' comparator.&nbsp; By comparison, a TL071 opamp has a typical unity gain slew rate of 13V/µs, and even that is slow compared to most comparators (note however, this slew rate is <i>not</i> necessarily achieved open-loop).&nbsp; Expect dedicated comparators to have a slew rate of at least 100V/µs<b><i>!</i></b></p>
+
+<p>The reader may also wish to have a look at the zero crossing detector described in the article about <a href="https://sound-au.com/articles/comparators.htm" target="_blank">Comparators</a>, which includes a circuit that can perform very well with audio frequencies up to at least 10kHz.&nbsp; It's more complex than the ones shown here, but is also a great deal more versatile.&nbsp; It's easy to get a pulse duty cycle of less than 2% at 1kHz.&nbsp; Similar results can be obtained from some of the other circuits described here, provided a fast enough comparator is used.</p>
+
+<p>The ideal zero crossing detector has infinite gain, and will change its output state at the exact moment the input signal passes through zero.&nbsp; The output state change should be instantaneous.</p>
+
+<p>It goes without saying that the 'ideal' does not exist, and there are many factors that influence the end result.&nbsp; All devices have finite gain (typically up to 100dB or so), and that limits the ultimate sensitivity to a change of voltage at the input.&nbsp; The input transistors of a comparator based circuit will never be <i>perfectly</i> matched, so the zero point can be displaced by several (or many) millivolts.&nbsp; All active circuits are subject to speed limitations, and <i>nothing</i> is instant.&nbsp; The output voltage can't change from (say) zero to 5V without some finite speed limit (known as slew rate).&nbsp; There is also the circuit's reaction time (propagation delay) that has to be considered, as that determines how quickly a signal gets from the input to the output.&nbsp; The limitations of real circuits have to be considered during the design process.&nbsp; While reality can be disappointing, that's what we have to live with.</p>
+
+
+<hr><b>Basic Low Frequency Circuit</b><br>
+<p>Figure 1 shows the zero crossing detector as used for the dimmer ramp generator in Project 62.&nbsp; This circuit has been around (almost) forever, and it does work reasonably well.&nbsp; Although it has almost zero phase inaccuracy, that is largely because the pulse is so broad that any inaccuracy is completely swamped.&nbsp; The comparator function is handled by transistor Q1 - very basic, but adequate for the job.</p>
+
+<p>The circuit is also sensitive to level, and for acceptable performance the AC waveform needs to be of reasonably high amplitude.&nbsp; 12-15V AC is typical.&nbsp; If the voltage is too low, the pulse width will increase.&nbsp; The arrangement shown actually gives better performance than the version shown in Project 62 and elsewhere on the Net.&nbsp; In case you were wondering, R1 is there to ensure that the voltage falls to zero - stray capacitance and even the tiniest amount of diode leakage current is sufficient to stop the circuit from working without it.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f1.gif" alt="Figure 1" border="1"><br>Figure 1 - Basic 50/60Hz Zero Crossing Detector</div>
+
+<p>The pulse width of this circuit (at 50Hz) is typically around 600µs (0.6ms) which sounds fast enough.&nbsp; The problem is that at 50Hz each half cycle takes only 10ms (8.33ms at 60Hz), so the pulse width is over 5% of the total period.&nbsp; This is why most dimmers can only claim a range of 10%-90% - the zero crossing pulse lasts too long to allow more range.</p>
+
+<p>While this is not a problem with the average dimmer, it is not acceptable for precision applications.&nbsp; For a tone burst generator (either the cosine burst or a 'conventional' tone burst generator), any inaccuracy will cause the switched waveform to contain glitches.&nbsp; The seriousness of this depends on the application.</p>
+
+<p>Precision zero crossing detectors come in a fairly wide range of topologies, some interesting, others not.&nbsp; One of the most common is shown in Project 58, and is commonly used for this application.&nbsp; The exclusive-OR (XOR) gate makes an excellent edge detector, as shown in Figure 2.&nbsp; The risetime of the input signal is critical - if it's too slow, there will be no output.&nbsp; The total risetime must be less than the delay determined by R1 and C1 (nominally 56ns in the circuit shown).</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f2.gif" alt="Figure 2" border="1"><br>Figure 2 - Exclusive OR Gate Edge Detector</div>
+
+<p>There is no doubt that the circuit shown above is more than capable of excellent results up to quite respectable frequencies.&nbsp; The upper frequency is limited only by the speed of the device used, and a 74HC86 has a propagation delay of only 11ns <sup>[<a href="https://sound-au.com/appnotes/an005.htm#ref">&nbsp;1&nbsp;</a>]</sup> and a transition time of 7ns, so operation at 100kHz or above is achievable.&nbsp; The CMOS 4070 can be used, but it has a much greater propagation delay (110ns with a 5V supply) and transition time (100ns with a 5V supply).&nbsp; Timings are 'typical', as shown in datasheets.</p>
+
+<p>The XOR gate is a special case in logic.&nbsp; It will output a '1' only when the inputs are different (i.e. one input must be at logic high (1) and the other at logic low (0V).&nbsp; The resistor and cap form a delay so that when an edge is presented (either rising or falling), the delayed input holds its previous value for a short time.&nbsp; In the example shown, the pulse width is 50ns.&nbsp; The signal is delayed by the propagation time of the device itself (around 11ns), so a small phase error has been introduced.&nbsp; The rise and fall time of the squarewave signal applied was 50ns, and this adds some more phase shift.</p>
+
+<p>Depending on the application, you will need to change the values of R1 and C1.&nbsp; The values shown provide a very narrow pulse (around 50ns), but most circuits don't need to be that fast.&nbsp; The length of the pulse is nominally just the product of the two values (56ns as shown), but that pulse width is too short for some oscilloscopes to display properly.&nbsp; For audio (up to around 10kHz), you can use 10k for R1 and 100pF for C1, giving a pulse width of 1µs.</p>
+
+<p>There is a pattern emerging in this article - the biggest limitation is speed, even for relatively slow signals.&nbsp; Digital logic can operate at very high speeds, and we have well reached the point where the signals can no longer be referred to as '1' and '0' - digital signals are back into the analogue domain, specifically RF technology.&nbsp; PCB tracks become transmission lines, and must often be terminated to prevent serious corruption of the digital waveform.</p>
+
+<p>The next challenge we face is converting the input waveform (we will assume a sinewave or other audio frequency waveform) into sharply defined edges so the XOR can work its magic.&nbsp; Another terribly under-rated building block is the comparator.&nbsp; While opamps can be used for low speed operation (and depending on the application), extreme speed is needed for accurate digitisation of an analogue signal.&nbsp; It may not appear so at first glance, but a zero crossing detector is a special purpose analogue to digital converter (ADC).&nbsp; In some cases, you can use an uncompensated opamp (such as the LM301) as a comparator, but most 'real' comparators are significantly faster.&nbsp; An LM301 was used as a zero crossing detector in <a href="https://sound-au.com/project143.htm" target="_blank">Project 143</a>.</p>
+
+
+<hr><b>Comparators</b><br>
+<p>The comparator used for a high speed zero crossing detector, a PWM converter or conventional ADC is critical.&nbsp; Low propagation delay and extremely fast operation are not only desirable, they are essential.</p>
+
+<blockquote>
+	Comparators may be the most underrated and under utilised monolithic linear component.&nbsp; This is unfortunate because comparators are one of the most flexible and 
+	universally applicable components available.&nbsp; In large measure the lack of recognition is due to the IC opamp, whose versatility allows it to dominate the analog 
+	design world.&nbsp; Comparators are frequently perceived as devices that crudely express analog signals in digital form - a 1-bit A/D converter.&nbsp; Strictly speaking, 
+	this viewpoint is correct.&nbsp; It is also wastefully constrictive in its outlook.&nbsp; Comparators don't "just compare" in the same way that opamps don't "just amplify". 
+	<sup>[<a href="https://sound-au.com/appnotes/an005.htm#ref">&nbsp;2&nbsp;</a>]</sup>
+</blockquote>
+
+<p>The above quote from Linear Technology was so perfect that I just had to include it.&nbsp; Comparators are indeed underrated as a building block, and they have two chief requirements ... low input offset and speed.&nbsp; For the application at hand (a zero crossing detector), both of these factors will determine the final accuracy of the circuit.&nbsp; The XOR has been demonstrated to give a precise and repeatable pulse, but its accuracy depends upon the exact time it 'sees' the transition of the AC waveform across zero.&nbsp; This task belongs to the comparator.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f3.gif" alt="Figure 3" border="1"><br>Figure 3 - Comparator Zero Crossing Detector</div>
+
+<p>In Figure 3 we see a typical comparator used for this application.&nbsp; The output is a square wave, which is then sent to a circuit such as that in Figure 2.&nbsp; This will create a single pulse for each squarewave transition, and this equates to the zero crossings of the input signal.&nbsp; It is assumed for this application that the input waveform is referenced to zero volts, so swings equally above and below zero.&nbsp; If the input voltage is outside the allowable input voltage of the comparator, it will need to be clamped to ensure the input transistors are not damaged.</p>
+
+<p>Note that most comparators have an open collector output, and the output pin must be connected to a positive supply with a suitable resistor.&nbsp; This is shown in Figure 3, with R2 connected to +Vcc.&nbsp; In most cases, the pull-up resistor (as it's known) can connect to a higher or lower voltage than the comparator's supply, allowing it to act as a level shifter.&nbsp; In some cases, the output can be used to activate a relay, provided the relay current is within the IC's ratings.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f4.gif" alt="Figure 4" border="1"><br>Figure 4 - Comparator Timing Error</div>
+
+<p>Figure 4 shows how the comparator can mess with our signal, causing the transition to be displaced in time, thereby causing an error.&nbsp; The significance of the error depends entirely on our expectations - there is no point trying to get an error of less than 10ns for a 50/60Hz lamp dimmer, for example.</p>
+
+<p>The LM393 comparator that was used for the simulation is a basic, comparatively low speed type, and with a quoted response time of 300ns it is too slow to be usable in this application.&nbsp; This is made a great deal worse by the propagation delay, which (as simulated) is 1.5µs.&nbsp; In general, the lower the power dissipation of a comparator, the slower it will be, although modern IC techniques have overcome this to some extent.&nbsp; Another choice here would be an LM393, which is very similar.</p>
+
+<p>You can see that the zero crossing of the sinewave (shown in green) occurs well before the output (red) transition - the cursor positions are set for the exact zero crossing of each signal.&nbsp; The output transition starts as the input passes through zero, but because of device delays, the output transition is almost 5µs later.&nbsp; Most of this delay is caused by the rather leisurely pace at which the output changes - in this case, about 5µs for the total 7V peak to peak swing.&nbsp; That gives us a slew rate of 1.4V/µs which is useless for anything above 100Hz or so.</p>
+
+<p>One of the critical factors with the comparator is its supply voltage.&nbsp; Ideally, this should be as low as possible, typically with no more than ±5V.&nbsp; The higher the supply voltage, the further the output voltage has to swing to get from maximum negative to maximum positive and vice versa.&nbsp; While a slew rate of 100V/µs may seem high, that may be too slow for an accurate ADC, pulse width modulator or high frequency zero crossing detector.</p>
+
+<p>At 100V/µs and a total supply voltage of 10V (±5V), it will take 0.1µs (100ns) for the output to swing from one extreme to the other.&nbsp; To get that into the realm of what we need, the slew rate would need to be 1kV/µs, giving a 10ns transition time.&nbsp; Working from Figure 3, you can see that even then there is an additional timing error of 5ns - not large, and in reality probably as good as we can expect.</p>
+
+<p>The problem is that the output doesn't even <i>start</i> to change until the input voltage passes through the reference point (usually ground).&nbsp; If there is any delay caused by slew rate limiting ('transition time') and propagation delay, by the time the output voltage passes through zero volts it is already many nanoseconds late.&nbsp; Extremely high slew rates are possible, and <a href="https://sound-au.com/appnotes/an005.htm#ref">Reference&nbsp;2</a> has details of a comparator (LT1016) that is faster than a TTL inverter! Very careful board layout and attention to bypassing is essential at such speeds, or the performance will be worse than woeful.</p>
+
+<p>While zero crossing detectors intended for mains (120V, 60Hz/ 230V, 50Hz) phase control are fairly straightforward, once you are working with higher frequencies (including audio), the requirement for high speed becomes imperative.&nbsp; Naturally, any significant speed increase also means a more expensive part that draws higher current, and much greater care is needed when laying out a PCB than needed for more pedestrian comparators.</p>
+
+
+<hr><b>Using A Differential Line Receiver</b>
+<p>This version is contributed by John Rowland <sup>[<a href="https://sound-au.com/appnotes/an005.htm#ref">&nbsp;3&nbsp;</a>]</sup> and is a very clever use of an existing IC for a completely new purpose.&nbsp; The DS3486 is a quad RS-422/ RS-423 differential line receiver.&nbsp; Although it only operates from a single 5V supply, the IC can accept an input signal of up to ±25V without damage - <i>however</i>, that's the absolute maximum, and recommended input voltage is ±7V.&nbsp; It is also fairly fast, with a typical quoted propagation time of 19ns and internal hysteresis of 140mV.</p>
+ 
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f5.gif" alt="Figure 5" border="1"><br>Figure 5 - Basic Zero Crossing Detector Using DS3486</div>
+
+<p>The general scheme is shown in Figure 5.&nbsp; Two of the comparators in the IC are used - one detects when the input voltage is positive and the other detects negative (with respect to earth/ ground).&nbsp; The NOR gate can only produce an output during the brief period when both comparator outputs are low (i.e. close to earth potential).</p>
+
+However, tests show that the two differential receiver channels do not switch at exactly 0.00V.&nbsp; With a typical DS3486 device, the positive detector switches at about 0.015V and the negative detector switches at approximately -0.010V.&nbsp; This results in an asymmetrical dead band of 25mV around 0V.&nbsp; Adding resistors as shown in Figure 6 allows the dead band to be made smaller, and (perhaps more importantly for some applications), it can be made to be symmetrical.<p></p>  
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f6.gif" alt="Figure 6" border="1"><br>Figure 6 - Modified Zero Crossing Detector To Obtain True 0V Detection</div>
+
+<p>Although fixed resistors are shown, it will generally be necessary to use trimpots.&nbsp; This allows for the variations between individual comparators - even within the same package.&nbsp; This is necessary because the DS3486 is only specified to switch with voltages no greater than ±200mV.&nbsp; The typical voltage is specified to be 70mV (exactly half the hysteresis voltage), but this is <i>not</i> a guaranteed parameter.</p>
+
+<p>Indeed, John Rowland (the original designer of the circuit) told me that only the National Semiconductor devices worked in the circuit -  supposedly identical ICs from other manufacturers refused to function.&nbsp; I quote ...</p>
+
+<blockquote>
+	We did some testing with 'equivalent' parts made by other manufacturers, and found very different behavior in the near-zero region.&nbsp; Some parts have lots of hysteresis, 
+	some have none, detection thresholds vary from device to device, and in fact even in a quad part like the DS3486 they are different from channel to channel within the 
+	same package.&nbsp; Eventually we settled on the National DS3486 with some added resistors on its input pins as shown in Figure 6.&nbsp; The most recent version of the circuit 
+	uses trimpots, 100 ohm on the positive detector and 200 ohm on the negative detector.&nbsp;  These values allow us to trim almost every DS3486 to balance the noise threshold 
+	in the ±5mV to ±15mV range.&nbsp; Occasionally we do get a DS3486 which will not detect in this range.&nbsp;  Sometimes, we find that both the positive and negative detectors 
+	are tripping on the same side (polarity) of zero, if so we pull that chip and replace it.
+</blockquote>    
+
+<p>The additional resistors allow the detection thresholds to be adjusted to balance the detection region around 0V.&nbsp; The resistor from pin 1 to earth makes the positive detector threshold more positive.&nbsp; The resistor from the input to pin 7 forces the negative detector threshold to become more negative.&nbsp; Typical values are shown for ±25mV detection using National's DS3486 parts.&nbsp; In reality, trimpots are essential to provide in-circuit adjustment.</p>
+
+
+<hr><b>Mains Voltage ZCDs</b>
+<p>There are countless ways to make a mains zero crossing detector.&nbsp; In many cases, the simplest circuit will be the most appropriate for a variety of reasons.&nbsp; The most common reason is cost - higher performance circuits need more parts, and that adds not only the cost of the parts, but the PCB real estate needed to accommodate them.&nbsp; When powering anything from the mains, series resistors must be physically larger than their power rating would indicate due to the large voltage gradients across them.&nbsp; Adding more parts simply means that the circuit takes up more space, and that may not be convenient.</p>
+
+<p>The two circuits shown below are examples of simple (but with comparatively high dissipation = wasted power), and more complex, but drawing much lower current from the mains.&nbsp; Many other designs are possible of course, but the two shown should be enough to get you started.&nbsp; There is a balance that needs to be struck between cost, complexity and performance.&nbsp; For example, a high cost precision circuit is not needed for a light dimmer, but a simple, low cost circuit will not have the accuracy required for test instrumentation.&nbsp; Further approaches are shown in the next section.</p>
+
+<p>A zero-crossing detector can be used to detect phase anomalies, or even as a 'loss of AC' detector.&nbsp; If the AC input is interrupted, the output pulse will be much longer than the nominal 1ms, and this is easily picked up by a microcontroller or other circuitry.&nbsp; The Figure 7 or Figure 8 circuit can be used, with the difference being that the output from Figure 7 will simply remain low if the AC fails.&nbsp; Should it remain low for more than 2ms or so, that means that there is no AC.</p>
+
+<p>If your application uses a conventional iron-core transformer power supply, you can use a zero crossing detector as shown in the <a href="https://sound-au.com/project62c.htm" target="_blank">LX-800 Power Control Section</a>, part of the stage lighting controller that was published back in 2001.&nbsp; While this is a safe and effective option, it can't be used if your circuit relies on a switchmode power supply because the mains waveform isn't available.</p> 
+
+<table border="1" cellpadding="5">
+	<tbody><tr class="tblyel"><td width="60" align="center"><img src="./Zero Crossing Detectors_files/mains-yel.gif" alt="mains">
+	</td><td class="t_12"><i><b>WARNING</b> - </i>The circuits described below involve mains wiring, and in some jurisdictions it may be illegal to work on or build mains powered equipment unless 
+	suitably qualified.&nbsp; Electrical safety is critical, and all wiring must be performed to the standards required in your country.&nbsp; ESP will not be held responsible for any loss or 
+	damage howsoever caused by the use or misuse of the material provided in this article.&nbsp; If you are not qualified and/or experienced with electrical mains wiring, then you must not 
+	attempt to build the circuit described.&nbsp; By continuing and/or building any of the circuits described, you agree that all responsibility for loss, damage (including personal injury 
+	or death) is yours alone.&nbsp; <i>Never work on mains equipment while the mains is connected <b>!</b></i></td>
+	<td width="60" align="center"><img src="./Zero Crossing Detectors_files/mains-yel.gif" alt="mains">
+</td></tr></tbody></table>
+
+<p>In the circuits below, there is a line indicated as 'Isolation Barrier'.&nbsp; Everything to the left of the optocoupler (<i>including the LED input pins</i>) is at mains potential, and is waiting to kill you if you're not careful.&nbsp; The section of PCB beneath the optocoupler must not have any copper tracks, and there is an advantage if even the PCB material itself is removed to create an air gap between the 'live' and 'safe' sections.&nbsp; Live wiring should be isolated by an absolute minimum of 5mm from any wiring that is user accessible (connections to potentiometers, input/ output plugs or sockets, etc.).</p>
+
+<p>Mains voltage zero-crossing detectors are common, and are essential with advanced 'phase cut' dimmers and many other mains switching applications.&nbsp; A simple version is shown below, and this was used in the <i>trailing edge</i> dimmer <a href="https://sound-au.com/project157a.htm" target="_blank">Project 157A</a> and <i>leading edge</i> dimmer <a href="https://sound-au.com/project157b.htm" target="_blank">Project 157B</a> projects.&nbsp; Resistor dissipation is acceptable (around 400mW in each resistor, 800mW total wasted power), but it's not a precision or low power circuit by any definition.&nbsp; Two resistors are shown to limit the mains current, not because of power, but voltage rating.&nbsp; Ideally they will be 1W types to minimise temperature and provide the maximum voltage rating.&nbsp; Most resistors have a maximum voltage limit that's well below the 325V peak from 230V mains, and using two (or even four) in series limits the voltage across each resistor to a safe value and extends resistor life.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f7.gif" alt="Figure 7" border="1"><br>Figure 7 - Mains Voltage, Isolated Zero Crossing Detector</div>
+
+<p>The pulse width depends on the optocoupler, and particularly the transfer ratio (which is based on the LED efficiency and the gain of the transistor).&nbsp; R1 and R2 should be reduced to 15k for 120V operation.&nbsp; It can also be done using an optocoupler with two back-to-back LEDs (e.g. SHF620A, H11AA1 or similar), eliminating the need for a diode bridge.&nbsp; This type of ZCD provides a positive pulse at the zero crossing, which can be converted to negative-going by using the optocoupler's transistor as an emitter follower.&nbsp; (There is no difference in the transfer ratio just because the transistor position is changed.)</p>
+
+<p>As shown, the peak LED current is just under 5mA, but the circuit will work with less.&nbsp; The minimum suggested peak current is around 2.4mA, making R1 and R2 68k.&nbsp; This reduces total dissipation to just under 300mW, but the load on the phototransistor has to be minimised (R3 should not be less than 10k with a 5V supply).&nbsp; This requirement can be relaxed (a little) if the optocoupler has a high current transfer ratio (at least  200%).&nbsp; As the LED ages it will lose output <sup>[<a href="https://sound-au.com/appnotes/an005.htm#ref">&nbsp;4&nbsp;</a>]</sup>, but maintaining a low forward current keeps this to a minimum.&nbsp; The LED can be expected to last for at least 20 years if the current is kept low (~ 10% of rated maximum is a good starting point).</p>
+
+<p>The 'transfer ratio' (or 'CTR' - current transfer ratio) of optocouplers needs some explanation.&nbsp; If described as '100%' (not uncommon for basic types), that means that 5mA in the LED will allow a maximum transistor current of 5mA.&nbsp; However, this is <i>not</i> a linear function, and the transfer ratio changes depending on LED current, hours of use, transistor collector (or emitter) external resistance and supply voltage.&nbsp; Unless specified for true linear operation, don't imagine that you can use an optocoupler for <i>any</i> signal transfer that requires high linearity.&nbsp; This general class of optocoupler is intended for 'on-off' operation, or for switchmode power supply regulation where linearity is not a requirement.</p>
+
+<p>One disadvantage of the circuit shown above is that the LED in the optocoupler gets current for at least 90% of the time.&nbsp; The zero crossing is indicated by the <i>absence</i> of current as the voltage across the LED falls to zero.&nbsp; Since the LED's useful life is determined by the amount of current it must pass and the total 'on' time, this reduces LED life.&nbsp; By maintaining a relatively low current, the optocoupler should last for a long time, but it's not the optimum way to drive it.</p>
+
+<hr>
+
+<p>The next circuit was found completely by accident, and because it works so well I asked the designer for permission to publish it here.&nbsp; The detector is very low power, and has particularly good detection of the mains zero crossing point.&nbsp; It's easy to get the pulse down to less than 1ms, and with some component value changes the pulse width can be reduced to around 500µs.&nbsp; While this level of precision isn't needed for most applications, it's inexpensive to implement, and works very well.&nbsp; Note that it will not be operative for a couple of hundred milliseconds after power is applied, because C2 has to charge before the LED current is useful.</p>
+
+<p>The LED gets current only when the input voltage is (close to) zero, so it has a much shorter duty cycle and should therefore last longer.&nbsp; However, the circuit needs an electrolytic capacitor, and these normally have a shorter life than LEDs.&nbsp; However, I don't consider this to be a limitation, because the circuitry on the isolated side will also use electros, and the other benefits of the circuit outweigh that one (very) small negative.&nbsp; The pulse width remains almost constant despite input voltage, with only the slightest change if the mains voltage falls from 230V to 120V.&nbsp; Peak LED current <i>is</i> affected though, and is proportional to the mains input voltage.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f8.gif" alt="Figure 8" border="1"><br>Figure 8 - Improved Mains Voltage, Isolated Zero Crossing Detector</div>
+
+<p>The author's page <sup>[<a href="https://sound-au.com/appnotes/an005.htm#ref">&nbsp;5&nbsp;</a>]</sup> has a lot of additional information and is recommended reading.&nbsp; R6 is an addition that can be used to reduce the width of the zero-crossing pulse.&nbsp; With the other values as shown, adding R6 reduces the pulse width from 830µs to 440µs, but it also reduces the LED current to about 2mA.&nbsp; R3 is different from the original as well.&nbsp; At 22k (as shown on the author's website), the pulse width is a little over 1ms, but increasing the value provides shorter pulses (and a corresponding increase in precision).&nbsp; The pulse polarity can be reversed by placing the phototransistor's load in the emitter rather than the collector as shown.&nbsp; This is shown in the next drawing.</p>
+
+<p>Because of the high value of the input resistors and the presence of C2 (10µF), the circuit requires some time before it operates normally.&nbsp; It will be fully operational after about 200ms with 230V or 120V mains, but the LED current is reduced with lower mains voltages.&nbsp; For use at 120V, R1 and R2 can be reduced to 100k, which will bring the LED current up to a little over 4mA peak.&nbsp; All diodes are 1N4148 or similar.&nbsp; High voltage diodes are not necessary because the voltage across the diodes is limited by the input resistors, and will not exceed a maximum of perhaps 6-7 volts.</p>
+
+<p>C1 is optional, and can be omitted.&nbsp; It provides a measure of HF noise reduction, but leaving it out is unlikely to cause any issues.&nbsp; Note that as shown, the detector outputs a negative-going as the mains voltage crosses zero.&nbsp; As described above, this can be reversed by using the optocoupler's transistor as an emitter follower.&nbsp; The optocoupler shown in the original circuit is a 4N35, but there are many that can be used.&nbsp; I have a tube of EL817 (4-pin) devices that work well (the LTV817 is an equivalent), but there are countless readily available parts to choose from.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f9.gif" alt="Figure 9" border="1"><br>Figure 9 - Modified Version Of EDN Zero Crossing Detector <sup>[<a href="https://sound-au.com/appnotes/an005.htm#ref">&nbsp;7&nbsp;</a>]</sup></div>
+
+<p>It's worth pointing out that one of the ZCD circuits published on the EDN Network website (and referenced on the DEXTREL site) is wrong in several places, and will not work without corrections.&nbsp; There are also some significant changes that can be made to the EDN circuit, which both simplify the circuit <i>and</i> improve performance.&nbsp; A reader posted a comment to query one error, but no-one ever bothered to reply.&nbsp; I've now included it, and it's actually a good circuit with the changes.&nbsp; It does use more parts than the circuit shown above though.&nbsp; It operates with a significantly higher voltage (across C1) than any of the other circuits, and this is one reason it can produce a ZCD pulse only 150µs wide.&nbsp; Personally, I don't think it's worth any additional complexity, but it may be useful.</p>
+
+<p>The circuit is somewhat sensitive to component value changes.&nbsp; As shown, the voltage across C1 (and Q2) will reach about 45-50V, and this can be reduced by increasing the values of R1 and R2.&nbsp; With 230V mains, you may be able to use up to 330k, but that may not work depending on the transistors.&nbsp; Overall, while it <i>can</i> be made to work well, IMO it's a bit too component-sensitive to be viable.&nbsp; If R1 and R2 are reduced in value it's more predictable, but the voltage across C1 and Q2 can exceed 70V, so higher-voltage parts are necessary.</p>
+
+<hr>
+
+<p>If you think that you need exceptionally high-precision narrow (less than 100µs) zero-crossing pulses, the next two circuits will do just that.&nbsp; The first circuit uses a CMOS 4093 quad Schmitt NAND gate, with all sections wired in parallel.&nbsp; This can achieve a pulse-width of less than 100µs, which is far better than can be achieved with a transistor or two.&nbsp; The input impedance is very high, and using the gates in parallel makes sure they can deliver enough current.&nbsp; The LED in the optocoupler is only pulsed during the zero-crossing.&nbsp; The circuit is fairly immune to noise because of the Schmitt trigger within the IC.&nbsp; You can also use the 74HC132 (also a quad Schmitt NAND gate), but note that it has a different pinout<b><i>!</i></b>&nbsp; The 74HC series can provide more output current.&nbsp; The LED current will be about 3mA with the 1k series resistor for the optocoupler, and the value of R5 can be reduced if you need more current.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f10.gif" alt="Figure 10" border="1"><br>Figure 10 - CMOS Schmitt NAND Gate Detector</div>
+
+<p>The next circuit will almost certainly exceed anything that's needed for zero-crossing detection.&nbsp; It's based on an LM393 dual comparator, but only one section is used.&nbsp; It's capable of achieving a pulse width of around 70µs, faster than any other I've seen.&nbsp; It may need some adjustment to the value of R4 if you don't get any output.&nbsp; Reducing R4 increases the pulse width.&nbsp; Again, the LED is pulsed only during the zero-crossing period.&nbsp; Unlike the Fig. 10 circuit, there's no Schmitt trigger and very noisy mains may cause timing problems.&nbsp; I've tested many ZCDs over the years and noise is rarely a problem, contrary to what you might expect.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f11.gif" alt="Figure 11" border="1"><br>Figure 11 - LM393 Comparator Detector</div>
+
+<p>Current drawn from the mains is minimal (about 2mA RMS).&nbsp; Ideally, you'll use two 27k resistors in series for R1 and R2 to ensure the voltage across each resistor is kept to the minimum.&nbsp; The voltage on U1.2 is about 650mV (set by D6).&nbsp; Because the LM393 comparator can have its inputs at (or even slightly below) ground, the low voltage isn't a problem.&nbsp; The output pulses low when Pin 3 falls below 650mV, and pulls current through the optocoupler's LED.&nbsp; The Fig. 11 circuit is the highest performance ZCD you're likely to find, consistent with physical size and parts count.&nbsp; It's <i>possible</i> to improve it, but there's little reason to do so.</p>
+
+<p>The 10µF filter cap for both circuits looks as if it's far too small, but it can maintain the voltage for the very brief current pulses.&nbsp; Be careful of stray capacitance around the comparator's input pin.&nbsp; If it's more than around 100pF the circuit may not work, and R4 will need to be reduced.&nbsp; Lower values give a wider pulse.&nbsp; The LED current is around 7mA with the 1k series resistor for the optocoupler.</p>
+
+<p>These circuits are included so you can experiment, and they have both been simulated, but the Fig 10 circuit was <i>not</i> tested on the workbench.&nbsp; If this changes this page will be updated with a scope capture.&nbsp; If used with 120V, 60Hz, reduce the value of R1 and R2 (2 x 27k), as only half the resistance is needed, and two resistors in series for each isn't a requirement.&nbsp; The following scope capture was done with an LM358 opamp rather than the LM393 comparator, as I don't have the latter in stock.&nbsp; There are a few circuit changes, but the comparator is better than the LM358.&nbsp; Even so, the very slow LM358 easily managed a pulse-width of only 250µs, perfectly centred on the zero-crossing point of the mains waveform.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f12.png" alt="Figure 12" border="1"><br>Figure 12 - LM358 Test Detector Waveforms</div>
+
+<p>There may be no good reason to use these, as I can't think of an application that needs such a high-precision ZCD pulse.&nbsp; However, if a precision circuit is available, there's no reason to use a 'lesser' version.&nbsp; Both are low cost (although PCB real-estate is greater than the other examples described).&nbsp; Both circuits can be powered from the output of a step-down transformer if this suits your application.&nbsp; R1 and R2 need to be adjusted accordingly.</p>
+
+<p>Both of these circuits are ESP 'originals', and while they use more parts than any of the others, they also have higher performance.&nbsp; One thing that I've found puzzling is the fact that no IC manufacturer has seen fit to offer an integrated ZCD with good performance.&nbsp; The MOC306x and MOC316x zero-cross TRIAC optocouplers demonstrate that it can be done, but they aren't suitable for general-purpose zero-crossing detection.</p>
+
+<hr>
+
+<p>In May 2022 I became aware of a new IC from Texas Instruments.&nbsp; The AMC23C12 is described as a 'Fast Response, Reinforced Isolated Window Comparator With Adjustable Threshold and Latch Function'.&nbsp; While the datasheet concentrates on power applications (monitoring motor current in particular), it was immediately obvious (to me) that it would make a fine zero-crossing detector.&nbsp; The IC has many different possibilities depending on some specific resistor values (in particular the resistor from the 'Ref' input to 'high-side' ground).&nbsp; There's now another IC - the AMC23C10 (Fast Response, Reinforced Isolated Comparator With Dual Output) which comes with an application note (SBAA542, published March 2022) describing a ZCD.</p>
+
+<div class="t-pic"><img src="./Zero Crossing Detectors_files/an005-f13.gif" alt="Figure 13" border="1"><br>Figure 13 - AMD23C12 Zero-Crossing Detector</div>
+
+<p>The datasheet claims that both DC inputs need bypass caps (100nF) as close to the IC pins as possible.&nbsp; C1 (10µF) is likely to suffice, but without a unit to test it's not known if this will be enough.&nbsp; At the time of writing, no-one seems to have the ICs available, only evaluation modules that are prohibitively expensive.&nbsp; I've shown the 'Latch' input grounded, but some versions of the IC have dual outputs.&nbsp; If grounded this will not affect operation as the outputs are open-drain (hence R5 pull-up resistor).&nbsp; Note that the ZCD pulse is from 'high' to 'low', the opposite of the other schemes shown.</p>
+
+<p>The IC has very high isolation (7kV DC, 5kV RMS, 1 minute) and is suitable for continuous operation with standard mains voltages.&nbsp; Propagation delay is well below 1µs with the arrangement shown above.&nbsp; There is one characteristic that's a little unfortunate, the 'high-side' current.&nbsp; It's rated for a 'typical' value of 2.9mA with a maximum of 3.6mA, so the input feed resistors have to be a lower value than with the other schemes shown.&nbsp; That means the resistance for 230V should not be less than 40k in total, or 20k for 120V.&nbsp; The resistors should be 1W types to ensure they run cool (the larger surface area results in better heat dissipation).</p>
+
+<p>This final circuit has been included because it's interesting, and shows that other methods of isolation between mains and 'safe' low-voltage circuitry exist.&nbsp; Optocouplers still remain the most common, and this isn't expected to change any time soon.&nbsp; Despite 'lumen depreciation' in LEDs, most optocouplers last for many years.</p>
+
+
+<a id="ref"></a><hr><b>References</b>
+<ol>
+	<li>Quad 2-input EXCLUSIVE-OR gate 74HC/HCT86, Philips Semiconductors Data Sheet
+	</li><li>A Seven-Nanosecond Comparator for Single Supply Operation, Linear Technology, Application Note 72, May 98
+	</li><li>Differential Line Receivers Function As Analog Zero-Crossing Detectors - John Rowland
+	</li><li>Gauging LED lifetime in optocouplers - Machine Design
+	</li><li><a href="https://dextrel.net/dextrel-start-page/design-ideas-2/mains-zero-crossing-detector" target="_blank" rel="nofollow">DIY - Isolated High Quality Mains Voltage Zero Crossing Detector</a> - DEXTREL
+	</li><li>Isolated circuit monitors AC line (EDN)
+	</li><li>Improved optocoupler circuits reduce current draw, resist LED aging (EDN) - <small>Note that the circuit is wrong and has never been corrected)</small>
+	</li><li><a href="https://www.ti.com/lit/ds/symlink/amc23c12.pdf" target="_blank">AMC23C12 Fast Response, Reinforced Isolated Window Comparator With Adjustable Threshold and Latch Function</a> - TI Datasheet
+	</li><li><a href="https://www.ti.com/product/AMC23C10?" target="_blank">AMC23C10 Fast Response, Reinforced Isolated Comparator With Dual Output</a> - TI Datasheet
+	</li><li><a href="https://www.ti.com/lit/an/sbaa542/sbaa542.pdf?" target="_blank">SBAA542 - Isolated Zero-Cross Detection Circuit</a> - TI Application Note
+  </li><li><a href="https://www.onsemi.com/pub/Collateral/AND9282-D.PDF" target="_blank">Mains Synchronization for PLC Modems</a> - OnSemi Application Note
+</li></ol>
+	
+<hr>
+<center>&nbsp;
+	<script async="" src="./Zero Crossing Detectors_files/f.txt"></script>
+	<!-- 728x90 -->
+	<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1947877433449191" data-ad-slot="9701674198"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</center>
+
+<hr>
+<table>
+	<tbody><tr><td width="300"><span class="imgswap"><a href="https://sound-au.com/index.html" style="display:block;"><img src="./Zero Crossing Detectors_files/a1.gif" alt="Home"><b class="bb">Main Index</b></a></span>
+	<span class="imgswap"><a href="https://sound-au.com/appnotes/index.html" style="display:block;"><img src="./Zero Crossing Detectors_files/a1.gif" alt="app notes"><b class="bb">App. Notes Index</b></a></span>
+</td></tr></tbody></table>
+<br>
+
+<table cellpadding="5" class="tblblk">
+<tbody><tr><td class="t-wht"><a id="copyright"></a><b>Copyright Notice.</b>This article, including but not limited to all text and diagrams, is the intellectual property of Rod Elliott, and is © 2004 - 2022.&nbsp; Reproduction or re-publication by any means whatsoever, whether electronic, mechanical or electro-mechanical, is strictly prohibited under International Copyright laws.&nbsp; The author (Rod Elliott) grants the reader the right to use this information for personal use only, and further allows that one (1) copy may be made for reference while constructing the project.&nbsp; Commercial use is prohibited without express written authorisation from Rod Elliott.</td></tr>
+</tbody></table>
+<div class="t-sml">Change Log:&nbsp; Page Created and Copyright © Rod Elliott 20 Jun 2005./ 08 Jan 2011 - added DS3486 detector./ May 2022 - added modified &amp; corrected EDN circuit (Fig. 9), included high-precision circuits, added ACS23C12 version./ Mar 2024 - amended Fig. 9 info and schematic.</div><br>
+
+<script type="text/javascript" src="./Zero Crossing Detectors_files/addthis_widget.js.download"></script>
+
+
+
+    <style data-type="cookiescriptstyles">
+      #cookiescript_injected {
+    background-color: #2d2d2d;
+    z-index: 999997;
+    opacity: 1;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'Open Sans', Arial, 'Trebuchet MS', 'Segoe UI', 'Helvetica', sans-serif;
+    box-shadow: 1px 2px 8px 0 rgba(0, 0, 0, 0.35);
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+.cookiescript_checkbox_label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding:0 4px;
+    line-height: 1.5;
+    margin:0;
+	text-align: left;
+}
+#cookiescript_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 29px;
+    line-height: 13px;
+    cursor: pointer;
+    color: #FFFFFF;
+    height: 15px;
+    width: 15px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    letter-spacing: 0;
+    font-family: 'Trebuchet MS', 'Arial', sans-serif;
+    font-weight: 100;
+    opacity: 0.85;
+    z-index: 999999;
+}
+
+#cookiescript_buttons {
+    display: flex;
+    flex-direction: row;
+    font-weight: 700;
+}
+#cookiescript_manage_wrap {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.1px;
+    font-weight: 500;
+}
+#cookiescript_manage {
+    display: inline;
+    cursor: pointer;
+    color: #FFFFFF;
+    opacity:0.85;
+}
+#cookiescript_manage #cookiescript_manageicon .cookiescript_gear {
+    fill: #FFFFFF;
+}
+#cookiescript_manage:hover #cookiescript_manageicon .cookiescript_gear {
+    fill: #6BBE6B;;
+}
+
+svg#cookiescript_manageicon {
+    width: 15px;
+    height: 15px;
+    display: inline;
+    margin: 0 5px 0 0;
+    padding: 0;
+    position: relative;
+    top: 3px;
+    vertical-align: baseline;
+}
+#cookiescript_header {
+    background-color: transparent;
+    z-index: 999998;
+    color: #FFFFFF;
+    font-size: 17px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    opacity:1;
+}
+.cookiescript_checkbox {
+    display: flex;
+    flex-direction: row;
+}
+input.cookiescript_checkbox_input {
+}
+span.cookiescript_checkbox_text {
+    display: inline-block;
+    font-size: 11px;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+#cookiescript_save {
+    border: 0;
+    transition: all 0.25s ease 0s;
+    background-color: #6BBE6B;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-size: 11px;
+    text-align: center;
+    line-height: 3.2;
+    letter-spacing: 0.4px;
+}
+/*IE 9 fixes*/
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {
+    .cookiescript_checkbox_label {
+        position: relative;
+        top:-10px;
+    }
+    #cookiescript_accept, #cookiescript_reject, #cookiescript_save{
+    	display: inline-block;
+    }
+    #cookiescript_buttons{
+    	text-align:center;
+    }
+}
+#cookiescript_save{
+    display: none;
+}
+#cookiescript_reject {
+    border: 1px solid #FFFFFF;
+    text-align: center;
+    line-height: 3;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #FFFFFF;
+    background: #2d2d2d;
+}
+#cookiescript_accept {
+	transition: all 0.25s ease 0s;
+	text-transform: uppercase;
+	font-size: 11px;
+	text-align: center;
+	letter-spacing: 0.4px;
+	border: 0;
+	background-color: #6BBE6B;
+	color: #FFFFFF;
+	line-height: 3.2;
+}
+
+#cookiescript_accept, #cookiescript_reject, #cookiescript_save {
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition-duration: 100ms;
+    transition-timing-function: ease-in-out;
+    min-width: 103px;
+}
+.cookiescript_bigger {
+    transform: scale(1.1);
+}
+#cookiescript_link {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 9px;
+    text-align: center;
+    font-weight: 400;
+    text-transform: uppercase;
+    opacity: 0.8;
+	display:inline !important;
+}
+
+#cookiescript_readmore,
+#cookiescript_reportlink,
+#cookiescript_cookiescriptlink {
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    margin: 0;
+    transition: all 100ms ease 0s;
+    background-color: transparent;
+    color: #FFFFFF;
+    display: inline;
+    font-size: 11px;
+}
+
+#cookiescript_description {
+    color: #FFFFFF;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    line-height: 1.7;
+    font-weight: 400;
+    opacity: 0.85;
+}
+#cookiescript_checkboxs {
+}
+#cookiescript_close:hover,
+#cookiescript_manage:hover,
+#cookiescript_link:hover
+{
+    opacity: 1;
+}
+
+#cookiescript_reject:hover {
+    background-color: #3e3e3e;
+}
+
+#cookiescript_accept:hover{
+	background-color: #63b063;
+}
+#cookiescript_save:hover {
+    background-color: #63b063;
+}
+
+#cookiescript_readmore:hover,
+#cookiescript_reportlink:hover,
+#cookiescript_cookiescriptlink:hover
+{
+    color: #6BBE6B;
+}
+
+#cookiescript_badge {
+    position: fixed;
+    line-height: 0;
+    cursor: pointer;
+    z-index: 99999;
+    font-size: 0;
+    color: #999;
+left: 10px;
+    display: flex;
+    flex-direction: row;
+    opacity: 1;
+}
+
+#cookiescript_badgetext{
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Open Sans', Arial, 'Trebuchet MS', 'Segoe UI', 'Helvetica', sans-serif;
+    overflow: hidden;
+    transition-duration: 500ms;
+    white-space: nowrap;
+    padding-right: 0;
+    color: #FFFFFF;
+}
+
+#cookiescript_badgesvg{
+    width:40px;
+    height: 40px;
+}
+
+
+
+#cookiescript_badge {
+bottom: 10px;
+    border-radius:25px;
+    padding:3px;
+    transition-duration: 500ms;
+    box-shadow: 1px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    background: #2d2d2d;
+}
+#cookiescript_badge:hover #cookiescript_badgetext{
+    max-width: 300px;
+    padding-right: 15px;
+    padding-left: 12px;
+}
+#cookiescript_badgetext {
+    font-size: 16px;
+    line-height: 2.5;
+    max-width: 0;
+}
+#cookiescript_badgeimage {
+    width: 40px;
+    height: 40px;
+}
+@media only screen and (max-width: 414px) {
+    #cookiescript_badgeimage {
+        width: 30px;
+        height: 30px;
+    }
+    #cookiescript_badgesvg{
+        width:30px;
+        height: 30px;
+    }
+    #cookiescript_badgetext{
+        display: none;
+    }
+}
+/*IE 9 fixes*/
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {
+	#cookiescript_badgeimage{
+    	float:left;
+    }
+}
+
+@media print{
+    #cookiescript_injected{
+        display:none;
+    }
+}
+
+
+
+
+#cookiescript_injected_fsd {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 17, 17, 0.5) !important;
+    z-index: 999996;
+	overflow-y: auto;
+}
+
+#cookiescript_fsd_wrapper {
+    max-width: 850px;
+	width: 95%;
+    margin: 0 auto 3% auto;
+	top: 10%;
+    line-height: 18px;
+    letter-spacing: normal;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+	background-color: #f3f3f3;
+    z-index: 999997;
+    opacity: 1;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'Open Sans', Arial, 'Trebuchet MS', 'Segoe UI', 'Helvetica', sans-serif;
+    box-shadow: 1px 2px 8px 0 rgba(0, 0, 0, 0.35);
+    color: #4d4d4d;
+    align-items: center;
+    overflow: hidden;
+    outline: none;
+    max-height: 80%;
+    box-sizing: border-box;
+	cursor: default;
+	min-height: 500px;
+}
+
+
+.cookiescript_fsd_header {
+	min-height: 57px;
+	border-bottom: 1px solid #e2e2e2;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: #ffffff;
+}
+.cookiescript_fsd_logo_a{
+	margin-left: 20px;
+}
+.cookiescript_fsd_logo{
+	height: 27px;
+	width: auto;
+	display: block;
+	max-width: 100%;
+}
+.cookiescript_fsd_language_drop_down {
+    position: absolute;
+    right: 75px;
+	top: 17px;
+}
+
+.cookiescript_fsd_main {
+    width: 100%;
+	background-color: #ffffff;
+}
+
+.cookiescript_fsd_main_info {
+    padding: 25px 50px;
+}
+
+.cookiescript_fsd_title {
+    background-color: transparent;
+    z-index: 999998;
+    color: #4d4d4d;
+    font-size: 17px;
+    line-height: 1.3;
+    font-weight: 600;
+    opacity:1;
+}
+
+.cookiescript_fsd_description {
+    color: #4d4d4d;
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 400;
+    opacity: 0.85;
+	margin-top: 21px;
+}
+
+#cookiescript_fsd_wrapper #cookiescript_readmore{
+	font-size: 13px;
+	color: #3fb6ee;
+	text-decoration: none;
+}
+#cookiescript_fsd_wrapper #cookiescript_readmore:hover{
+	text-decoration: underline;
+}
+
+.cookiescript_fsd_tabs {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+	flex-direction: row;
+    width: 100%;
+}
+
+.cookiescript_fsd_tabs > div {
+	cursor: pointer;
+	width: 50%;
+	text-transform: uppercase;
+	font-size: 14px;
+	text-align: center;
+	line-height: 1.7;
+	font-weight: bold;
+	border-top: 1px solid transparent;
+	transition: all 300ms ease 0s;
+	padding: 12px 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #ffffff;
+}
+
+.cookiescript_fsd_tabs > .cookiescript_active {
+    border-top: 1px solid #3fb6ee;
+    background-color: #f3f3f3;
+    color: #3fb6ee;
+}
+
+.cookiescript_fsd_tabs_content {
+    background-color: #f3f3f3;
+    padding: 5px 50px 10px 50px;
+    width: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+	--scrollbar-width: 8px;
+	--mask-height: 35px;
+	--mask-image-content: linear-gradient( to bottom, transparent, black var(--mask-height), black calc(100% - var(--mask-height)), transparent );
+	--mask-size-content: calc(100% - var(--scrollbar-width)) 100%;
+	--mask-image-scrollbar: linear-gradient(black, black);
+	--mask-size-scrollbar: var(--scrollbar-width) 100%;
+	mask-image: var(--mask-image-content), var(--mask-image-scrollbar);
+	mask-size: var(--mask-size-content), var(--mask-size-scrollbar);
+	mask-position: 0 0, 100% 0;
+	mask-repeat: no-repeat, no-repeat;
+	-webkit-mask-image: var(--mask-image-content), var(--mask-image-scrollbar);
+	-webkit-mask-size: var(--mask-size-content), var(--mask-size-scrollbar);
+	-webkit-mask-position: 0 0, 100% 0;
+	-webkit-mask-repeat: no-repeat, no-repeat;
+}
+
+.cookiescript_fsd_tabs_content .cookiescript_hidden {
+    opacity: 0;
+    height: 0 !important;
+    overflow: hidden;
+	padding: 0 !important;
+	min-height: 0 !important;
+}
+
+.cookiescript_fsd_category {
+    border-bottom: 1px solid #e2e2e2;
+    padding-top: 23px;
+    padding-bottom: 17px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cookiescript_fsd_category:last-child {
+    border-bottom: 0;
+}
+
+.cookiescript_fsd_category .cookiescript_hidden {
+    opacity: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0 !important;
+	max-height: 0;
+	margin: 0;
+	height: auto !important;
+		transition: max-height 300ms ease 200ms, opacity ease 200ms, margin-top 100ms ease 100ms;
+	}
+
+.cookiescript_fsd_category_main {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cookiescript_fsd_category_info {
+    flex: 5;
+    padding-right: 10px;
+}
+
+.cookiescript_fsd_category_control {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.cookiescript_fsd__category_name {
+    font-size: 14px;
+    font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.cookiescript_category_description {
+	font-size: 13px;
+	padding-bottom: 5px;
+	line-height: 1.6;
+}
+
+.cookiescript_fsd_cookies {
+	border: 1px solid #e2e2e2;
+	border-radius: 5px;
+	overflow-y: auto;
+	margin-top: 15px;
+	max-height: 222px;
+		transition: max-height 300ms ease, opacity 200ms ease 300ms, margin-top 100ms ease 100ms;
+	}
+
+
+.cookiescript_fsd_cookies_control {
+    color: #3fb6ee;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 700;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.cookiescript_fsd_cookies_control .cookiescript_hidden {
+    display: none;
+}
+
+.cookiescript_fsd_cookies_control  span{
+	margin-right: 7px;
+}
+
+.cookiescript_fsd_cookies_control svg {
+    width: 10px;
+    height: 10px;
+    font-size: 10px;
+}
+
+.cookiescript_fsd_cookies_control.active svg {
+    width: 10px;
+    height: 10px;
+    font-size: 10px;
+    transform: rotate(180deg);
+}
+
+.cookiescript_fsd_cookies_table {
+    width: 100%;
+}
+
+.cookiescript_fsd_cookies_table,
+.cookiescript_fsd_cookies_table tbody,
+.cookiescript_fsd_cookies_table thead,
+.cookiescript_fsd_cookies_table tr,
+.cookiescript_fsd_cookies_table th,
+.cookiescript_fsd_cookies_table td {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    vertical-align: baseline;
+    background-color: #ffffff;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+
+.cookiescript_fsd_cookies_table tr:last-child td{
+    border-bottom: 0;
+}
+
+.cookiescript_fsd_cookies_table td, .cookiescript_fsd_cookies_table th {
+    white-space: normal;
+    font-size: 13px;
+    text-align: left;
+    margin: 0;
+}
+.cookiescript_fsd_cookies_table th {
+	font-weight: 600;
+	padding: 8px 8px;
+	line-height: 1.4;
+	word-break: keep-all;
+	vertical-align: middle;
+}
+
+.cookiescript_fsd_cookies_table td {
+	padding: 7px 8px;
+	line-height: 1.6;
+	vertical-align: top;
+	font-weight: 400;
+	border: 0;
+	border-top: 1px solid #e2e2e2;
+	color: #4d4d4d;
+}
+
+.cookiescript_fsd_cookies_table th:last-child {
+    padding-right: 10px;
+}
+
+    .cookiescript_fsd_cookies_table td:nth-child(1), .cookiescript_fsd_cookies_table th:nth-child(1) {
+    padding-left: 15px;
+    word-break: normal;
+}
+
+.cookiescript_fsd_cookies_table td:nth-child(2) {
+    color: #3fb6ee;
+}
+
+.cookiescript_fsd_cookies_table td:nth-child(3), .cookiescript_fsd_cookies_table th:nth-child(3) {
+    text-align: center;
+}
+.cookiescript_vendor_name a{
+	text-decoration: underline;
+	font-weight: bold;
+	color: #3fb6ee;
+	line-height: normal;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	background: transparent;
+	font-size: 13px;
+}
+.cookiescript_vendor_name a:hover {
+	text-decoration: underline;
+	color: #3fb6ee;
+}
+
+.cookiescript_fsd_footer {
+    border-top: 1px solid #e2e2e2;
+    width: 100%;
+	background-color: #ffffff;
+}
+#cookiescript_fsd_wrapper #cookiescript_declarationwrap{
+		transition: opacity 200ms ease 0ms, height 0ms ease 200ms;
+	}
+#cookiescript_fsd_wrapper #cookiescript_aboutwrap{
+	font-size: 13px;
+	padding: 23px 0;
+	line-height: 1.6;
+	text-align: left;
+	font-weight: normal;
+	box-sizing: border-box;
+	transition: opacity 200ms ease 0ms;
+	overflow: auto;
+	min-height: 181px;
+}
+
+#cookiescript_setting_advertising_wrap {
+    font-size: 12px;
+}
+
+#cookiescript_iab_type {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #e2e2e2;
+    flex-wrap: wrap;
+}
+
+#cookiescript_iab_type > div {
+    cursor: pointer;
+    padding: 0 9px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #f5f5f5;
+    color: #4d4d4d;
+    line-height: 2;
+    margin: 3px 5px;
+    white-space: nowrap;
+}
+
+#cookiescript_iab_type .cookiescript_active {
+    background: #3fb6ee;
+    color: #FEFEFE;
+}
+
+
+.cookiescript_fsd_cookies::-webkit-scrollbar-track,
+.cookiescript_fsd_tabs_content::-webkit-scrollbar-track {
+    background-color: #DADADA;
+}
+
+.cookiescript_fsd_cookies::-webkit-scrollbar,
+.cookiescript_fsd_tabs_content::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.cookiescript_fsd_cookies::-webkit-scrollbar-thumb,
+.cookiescript_fsd_tabs_content::-webkit-scrollbar-thumb {
+    background-color: #6BBE6B;
+}
+
+
+
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {
+    #cookiescript_iab_type > div{
+        display:inline-block;
+    }
+}
+
+/* --- OVERRIDE ----*/
+
+#cookiescript_injected_fsd #cookiescript_close {
+	top: 18px;
+	font-size: 37px;
+	right: 25px;
+	color: #4d4d4d;
+	height: 18px;
+	width: 18px;
+}
+
+#cookiescript_injected_fsd #cookiescript_buttons {
+    justify-content: flex-start;
+    padding: 5px 15px;
+}
+
+#cookiescript_injected_fsd #cookiescript_accept, #cookiescript_injected_fsd #cookiescript_save, #cookiescript_injected_fsd #cookiescript_reject {
+		flex-grow: unset;
+		padding: 0px 25px;
+	margin: 10px 5px;
+	font-size: 13px;
+	border-radius: 30px;
+	line-height: 3;
+}
+#cookiescript_injected_fsd #cookiescript_buttons{
+	flex-direction: row;
+}
+#cookiescript_injected_fsd #cookiescript_buttons #cookiescript_reject {
+    margin-right: auto;
+}
+
+#cookiescript_injected_fsd .cookiescript-iab-itemContainer {
+    border: 1px solid #e2e2e2;
+	background-color: #ffffff;
+	padding: 10px;
+}
+
+#cookiescript_injected_fsd .cookiescript-iab-header,
+#cookiescript_injected_fsd .cookiescript-iab-itemHeader,
+#cookiescript_injected_fsd .cookiescript-iab-itemHeaderAction {
+    color: #4d4d4d;
+}
+
+#cookiescript_injected_fsd .cookiescript-iab-itemHeaderAction {
+    border-color: #4d4d4d;;
+}
+
+#cookiescript_injected_fsd #cookiescript_accept {
+    background-color: #ffffff;
+    color: #4d4d4d;
+    border: 1px solid #4d4d4d;
+    order: 1}
+
+#cookiescript_injected_fsd #cookiescript_accept:hover {
+    background-color: #ececec;
+}
+
+#cookiescript_injected_fsd #cookiescript_reject {
+    background-color: #ffffff;
+    color: #4d4d4d;
+    border: 1px solid #4d4d4d;
+    order: 2}
+
+#cookiescript_injected_fsd #cookiescript_reject:hover {
+    background-color: #ececec;
+}
+
+#cookiescript_injected_fsd #cookiescript_save {
+    display: inline-block;
+    background-color: #6BBE6B;
+    color: #ffffff;
+    border: 1px solid #6BBE6B;
+    order: 3}
+
+#cookiescript_injected_fsd #cookiescript_save:hover {
+    background-color: #63b063;
+}
+
+/*Switches color reload*/
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after {
+    background: #6BBE6B;
+}
+
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus):not(:active) .mdc-switch__handle::after {
+    background: #68b968;
+}
+
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:focus:not(:active) .mdc-switch__handle::after {
+    background: #68b968;
+}
+
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:active .mdc-switch__handle::after {
+    background: #68b968;
+}
+
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus) .mdc-switch__ripple::before,
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus) .mdc-switch__ripple::after{
+    background: #6BBE6B;
+}
+
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:focus .mdc-switch__ripple::before,
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:focus .mdc-switch__ripple::after {
+    background: #6BBE6B;
+}
+
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:active .mdc-switch__ripple::before,
+#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:active .mdc-switch__ripple::after {
+    background: #6BBE6B;
+}
+
+#cookiescript_injected_fsd .mdc-switch:enabled .mdc-switch__track::after {
+    background: #6BBE6B;
+    opacity: 0.3;
+}
+
+#cookiescript_injected_fsd .mdc-switch:enabled:hover:not(:focus):not(:active) .mdc-switch__track::after {
+    background: #6BBE6B;
+    opacity: 0.3;
+}
+
+#cookiescript_injected_fsd .mdc-switch:enabled:focus:not(:active) .mdc-switch__track::after {
+    background: #6BBE6B;
+    opacity: 0.3;
+}
+
+#cookiescript_injected_fsd .mdc-switch:enabled:active .mdc-switch__track::after {
+    background: #6BBE6B;
+    opacity: 0.3;
+}
+
+
+#cookiescript_fsd_wrapper {
+    border-radius: 10px;
+}
+
+#cookiescript_iab_type > div {
+    border-radius: 20px;
+}
+.cookiescript_fsd_cookies::-webkit-scrollbar-track,
+.cookiescript_fsd_tabs_content::-webkit-scrollbar-track
+#cookiescript_iabwrap::-webkit-scrollbar-thumb,
+#cookiescript_aboutwrap::-webkit-scrollbar-thumb{
+    border-radius: 6px;
+}
+.cookiescript_fsd_cookies::-webkit-scrollbar-thumb,
+.cookiescript_fsd_tabs_content::-webkit-scrollbar-thumb,
+#cookiescript_iabwrap::-webkit-scrollbar-thumb,
+#cookiescript_aboutwrap::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+}
+
+@media only screen and (max-width: 414px) {
+	#cookiescript_fsd_wrapper {
+		width: 100%;
+		height: 100%;
+		max-height: 100%;
+		top: 0;
+		border-radius: 0;
+		margin: 0;
+	}
+
+	.cookiescript_fsd_main_info {
+		padding: 13px 20px;
+		overflow-y: auto;
+		max-height: 140px;
+	}
+	.cookiescript_fsd_description{
+		margin-top: 8px;
+	}
+	.cookiescript_fsd_tabs > div {
+		padding: 6px;
+		font-size: 12px;
+	}
+
+	.cookiescript_fsd_tabs_content {
+		padding: 5px 20px 10px 20px;
+	}
+
+	.cookiescript_fsd_cookies_table thead {
+		display: none;
+	}
+
+	.cookiescript_fsd_cookies_table td {
+		display: flex;
+		border-bottom: 0px;
+	}
+
+	.cookiescript_fsd_cookies_table tr td:last-child {
+		border-bottom: 0;
+	}
+
+	.cookiescript_fsd_cookies_table td {
+		border-top: 0;
+	}
+
+	.cookiescript_fsd_cookies_table td::before {
+		content: attr(label);
+		font-weight: bold;
+		width: 120px;
+		min-width: 120px;
+		text-align: left;
+	}
+
+	.cookiescript_fsd_cookies_table td:nth-child(2):before {
+		color: #4d4d4d;
+	}
+
+	.cookiescript_category_description {
+		text-align: left;
+	}
+
+	.cookiescript_fsd_cookies_table td:nth-child(1),
+	.cookiescript_fsd_cookies_table th:nth-child(1) {
+		padding-left: 7px;
+		font-weight: bold;
+		border-top: 1px solid #e2e2e2;
+	}
+
+	.cookiescript_fsd_cookies_table tr:nth-child(1) td:nth-child(1),
+	.cookiescript_fsd_cookies_table tr:nth-child(1) th:nth-child(1) {
+		border-top: 0px;
+	}
+
+	.cookiescript_fsd_cookies_table td:last-child {
+		border-bottom: none;
+	}
+
+	.cookiescript_fsd_cookies_table tr:nth-child(even) {
+		background: #f5f5f5;
+	}
+
+	.cookiescript_fsd_cookies_table tr:nth-child(even) td {
+		border-bottom: 0px solid #FFF;
+	}
+
+	#cookiescript_injected_fsd #cookiescript_buttons {
+		margin-bottom: 0;
+	}
+
+	#cookiescript_injected_fsd #cookiescript_buttons #cookiescript_accept,
+	#cookiescript_injected_fsd #cookiescript_buttons #cookiescript_save,
+	#cookiescript_injected_fsd #cookiescript_buttons #cookiescript_reject {
+		flex-grow: 1;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		padding: 0 15px;
+	}
+
+	.cookiescript_fsd_language_drop_down {
+		right: 40px;
+	}
+
+	#cookiescript_injected_fsd #cookiescript_close{
+		right:14px;
+	}
+	
+
+}
+
+
+
+
+.cookiescript_rtl {
+    direction:rtl;
+}
+
+
+/*Start Checkboxes*/
+#cookiescript_injected_fsd .mdc-checkbox,
+#cookiescript_injected .mdc-checkbox {
+    box-sizing: content-box !important;
+}
+#cookiescript_injected_fsd .mdc-checkbox__native-control,
+#cookiescript_injected .mdc-checkbox__native-control {
+    display: block;
+    z-index: 1;
+}
+#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__native-control:focus~.mdc-checkbox__background::before, 
+#cookiescript_injected .mdc-checkbox .mdc-checkbox__native-control:focus~.mdc-checkbox__background::before, 
+#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background::before,
+#cookiescript_injected .mdc-checkbox .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background::before {
+    background-color: #FFFFFF;
+}
+
+#cookiescript_injected .mdc-checkbox,#cookiescript_injected_fsd .mdc-checkbox{display:inline-block;position:relative;flex:0 0 18px;box-sizing:content-box;width:18px;height:18px;line-height:0;white-space:nowrap;cursor:pointer;vertical-align:bottom;padding:11px}#cookiescript_injected .mdc-checkbox .mdc-checkbox__native-control:checked~.mdc-checkbox__background::before,#cookiescript_injected .mdc-checkbox .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__native-control:checked~.mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background::before{background-color:#FFFFFF}@supports not (-ms-ime-align:auto){#cookiescript_injected .mdc-checkbox .mdc-checkbox__native-control:checked~.mdc-checkbox__background::before,#cookiescript_injected .mdc-checkbox .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__native-control:checked~.mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background::before{background-color:var(--mdc-theme-secondary, #FFFFFF)}}#cookiescript_injected .mdc-checkbox .mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__background{top:11px;left:11px}#cookiescript_injected .mdc-checkbox .mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__background::before{top:-13px;left:-13px;width:40px;height:40px}#cookiescript_injected .mdc-checkbox .mdc-checkbox__native-control,#cookiescript_injected_fsd .mdc-checkbox .mdc-checkbox__native-control{top:0;right:0;left:0;width:40px;height:40px}#cookiescript_injected .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate)~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate)~.mdc-checkbox__background{border-color:#FFFFFF;background-color:transparent}#cookiescript_injected .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,#cookiescript_injected .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background{border-color:#FFFFFF;background-color:#FFFFFF}#cookiescript_injected .mdc-checkbox__native-control[disabled]:not(:checked):not(:indeterminate)~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control[disabled]:not(:checked):not(:indeterminate)~.mdc-checkbox__background{border-color:rgba(255,255,255,0.26);background-color:transparent}#cookiescript_injected .mdc-checkbox__native-control[disabled]:checked~.mdc-checkbox__background,#cookiescript_injected .mdc-checkbox__native-control[disabled]:indeterminate~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control[disabled]:checked~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control[disabled]:indeterminate~.mdc-checkbox__background{border-color:transparent;background-color:rgba(255,255,255,0.26)}#cookiescript_injected .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark,#cookiescript_injected_fsd .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark{color:#2d2d2d}#cookiescript_injected .mdc-checkbox__native-control:disabled~.mdc-checkbox__background .mdc-checkbox__checkmark,#cookiescript_injected_fsd .mdc-checkbox__native-control:disabled~.mdc-checkbox__background .mdc-checkbox__checkmark{color:#2d2d2d}#cookiescript_injected .mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__background{display:inline-flex;position:absolute;align-items:center;justify-content:center;box-sizing:border-box;width:18px;height:18px;border:2px solid #FFFFFF;border-radius:2px;background-color:transparent;pointer-events:none;will-change:background-color,border-color;transition:background-color 90ms 0s cubic-bezier(.4,0,.6,1),border-color 90ms 0s cubic-bezier(.4,0,.6,1)}#cookiescript_injected .mdc-checkbox__background .mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox__background .mdc-checkbox__background::before{background-color:#000}@supports not (-ms-ime-align:auto){#cookiescript_injected .mdc-checkbox__checkmark,#cookiescript_injected_fsd .mdc-checkbox__checkmark{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;opacity:0;transition:opacity 180ms 0s cubic-bezier(.4,0,.6,1)}#cookiescript_injected .mdc-checkbox__checkmark-path,#cookiescript_injected_fsd .mdc-checkbox__checkmark-path{transition:stroke-dashoffset 180ms 0s cubic-bezier(.4,0,.6,1);stroke:currentColor;stroke-width:3.12px;stroke-dashoffset:29.7833385;stroke-dasharray:29.7833385}#cookiescript_injected .mdc-checkbox__native-control:checked~.mdc-checkbox__background,#cookiescript_injected .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control:checked~.mdc-checkbox__background,#cookiescript_injected_fsd .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background{transition:border-color 90ms 0s cubic-bezier(0,0,.2,1),background-color 90ms 0s cubic-bezier(0,0,.2,1)}#cookiescript_injected .mdc-checkbox__native-control:checked~.mdc-checkbox__background .mdc-checkbox__checkmark-path,#cookiescript_injected .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background .mdc-checkbox__checkmark-path,#cookiescript_injected_fsd .mdc-checkbox__native-control:checked~.mdc-checkbox__background .mdc-checkbox__checkmark-path,#cookiescript_injected_fsd .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background .mdc-checkbox__checkmark-path{stroke-dashoffset:0}#cookiescript_injected .mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox__background::before{position:absolute;-webkit-transform:scale(0,0);transform:scale(0,0);border-radius:50%;opacity:0;pointer-events:none;content:"";will-change:opacity,transform;transition:opacity 90ms 0s cubic-bezier(.4,0,.6,1),-webkit-transform 90ms 0s cubic-bezier(.4,0,.6,1);transition:opacity 90ms 0s cubic-bezier(.4,0,.6,1),transform 90ms 0s cubic-bezier(.4,0,.6,1);transition:opacity 90ms 0s cubic-bezier(.4,0,.6,1),transform 90ms 0s cubic-bezier(.4,0,.6,1),-webkit-transform 90ms 0s cubic-bezier(.4,0,.6,1)}#cookiescript_injected .mdc-checkbox__native-control:focus~.mdc-checkbox__background::before,#cookiescript_injected_fsd .mdc-checkbox__native-control:focus~.mdc-checkbox__background::before{-webkit-transform:scale(1);transform:scale(1);opacity:.12;transition:opacity 80ms 0s cubic-bezier(0,0,.2,1),-webkit-transform 80ms 0s cubic-bezier(0,0,.2,1);transition:opacity 80ms 0s cubic-bezier(0,0,.2,1),transform 80ms 0s cubic-bezier(0,0,.2,1);transition:opacity 80ms 0s cubic-bezier(0,0,.2,1),transform 80ms 0s cubic-bezier(0,0,.2,1),-webkit-transform 80ms 0s cubic-bezier(0,0,.2,1)}#cookiescript_injected .mdc-checkbox__native-control,#cookiescript_injected_fsd .mdc-checkbox__native-control{position:absolute;margin:0;padding:0;opacity:0;cursor:inherit}#cookiescript_injected .mdc-checkbox__native-control:disabled,#cookiescript_injected_fsd .mdc-checkbox__native-control:disabled{cursor:default;pointer-events:none}#cookiescript_injected .mdc-checkbox__native-control:checked~.mdc-checkbox__background .mdc-checkbox__checkmark,#cookiescript_injected_fsd .mdc-checkbox__native-control:checked~.mdc-checkbox__background .mdc-checkbox__checkmark{transition:opacity 180ms 0s cubic-bezier(0,0,.2,1),-webkit-transform 180ms 0s cubic-bezier(0,0,.2,1);transition:opacity 180ms 0s cubic-bezier(0,0,.2,1),transform 180ms 0s cubic-bezier(0,0,.2,1);transition:opacity 180ms 0s cubic-bezier(0,0,.2,1),transform 180ms 0s cubic-bezier(0,0,.2,1),-webkit-transform 180ms 0s cubic-bezier(0,0,.2,1);opacity:1}#cookiescript_injected .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background .mdc-checkbox__checkmark,#cookiescript_injected_fsd .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background .mdc-checkbox__checkmark{-webkit-transform:rotate(45deg);transform:rotate(45deg);opacity:0;transition:opacity 90ms 0s cubic-bezier(.4,0,.6,1),-webkit-transform 90ms 0s cubic-bezier(.4,0,.6,1);transition:opacity 90ms 0s cubic-bezier(.4,0,.6,1),transform 90ms 0s cubic-bezier(.4,0,.6,1);transition:opacity 90ms 0s cubic-bezier(.4,0,.6,1),transform 90ms 0s cubic-bezier(.4,0,.6,1),-webkit-transform 90ms 0s cubic-bezier(.4,0,.6,1)}#cookiescript_injected .mdc-checkbox,#cookiescript_injected_fsd .mdc-checkbox{-webkit-tap-highlight-color:transparent}}
+/*End Checkboxes*/
+
+
+/*Start Toggle*/
+
+#cookiescript_injected .mdc-elevation-overlay,#cookiescript_injected_fsd .mdc-elevation-overlay{position:absolute;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity 280ms cubic-bezier(.4,0,.2,1);background-color:#fff}#cookiescript_injected .mdc-switch,#cookiescript_injected_fsd .mdc-switch{align-items:center;background:0 0;border:none;cursor:pointer;display:inline-flex;flex-shrink:0;margin:0;outline:0;overflow:visible;padding:0;position:relative}#cookiescript_injected .mdc-switch:disabled,#cookiescript_injected_fsd .mdc-switch:disabled{cursor:default;pointer-events:none}#cookiescript_injected .mdc-switch input[type=checkbox],#cookiescript_injected_fsd .mdc-switch input[type=checkbox]{display:none;visibility:hidden}#cookiescript_injected .mdc-switch__track,#cookiescript_injected_fsd .mdc-switch__track{overflow:hidden;position:relative;width:100%}#cookiescript_injected .mdc-switch__track::after,#cookiescript_injected .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch__track::after,#cookiescript_injected_fsd .mdc-switch__track::before{border:1px solid transparent;border-radius:inherit;box-sizing:border-box;content:"";height:100%;left:0;position:absolute;width:100%}#cookiescript_injected .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch__track::before{transition:-webkit-transform 75ms 0s cubic-bezier(0,0,.2,1);transition:transform 75ms 0s cubic-bezier(0,0,.2,1);-webkit-transform:translateX(0);transform:translateX(0)}#cookiescript_injected .mdc-switch__track::after,#cookiescript_injected_fsd .mdc-switch__track::after{transition:-webkit-transform 75ms 0s cubic-bezier(.4,0,.6,1);transition:transform 75ms 0s cubic-bezier(.4,0,.6,1);-webkit-transform:translateX(-100%);transform:translateX(-100%)}#cookiescript_injected .mdc-switch__track[dir=rtl]::after,#cookiescript_injected [dir=rtl] .mdc-switch__track::after,#cookiescript_injected_fsd .mdc-switch__track[dir=rtl]::after,#cookiescript_injected_fsd [dir=rtl] .mdc-switch__track::after{-webkit-transform:translateX(100%);transform:translateX(100%)}#cookiescript_injected .mdc-switch--selected .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch--selected .mdc-switch__track::before{transition:-webkit-transform 75ms 0s cubic-bezier(.4,0,.6,1);transition:transform 75ms 0s cubic-bezier(.4,0,.6,1);-webkit-transform:translateX(100%);transform:translateX(100%)}#cookiescript_injected .mdc-switch--selected .mdc-switch__track[dir=rtl]::before,#cookiescript_injected [dir=rtl] .mdc-switch--selected .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch--selected .mdc-switch__track[dir=rtl]::before,#cookiescript_injected_fsd [dir=rtl] .mdc-switch--selected .mdc-switch__track::before{-webkit-transform:translateX(-100%);transform:translateX(-100%)}#cookiescript_injected .mdc-switch--selected .mdc-switch__track::after,#cookiescript_injected_fsd .mdc-switch--selected .mdc-switch__track::after{transition:-webkit-transform 75ms 0s cubic-bezier(0,0,.2,1);transition:transform 75ms 0s cubic-bezier(0,0,.2,1);-webkit-transform:translateX(0);transform:translateX(0)}#cookiescript_injected .mdc-switch__handle-track,#cookiescript_injected_fsd .mdc-switch__handle-track{height:100%;pointer-events:none;position:absolute;top:0;transition:-webkit-transform 75ms 0s cubic-bezier(.4,0,.2,1);transition:transform 75ms 0s cubic-bezier(.4,0,.2,1);left:0;right:auto;-webkit-transform:translateX(0);transform:translateX(0)}#cookiescript_injected .mdc-switch__handle-track[dir=rtl],#cookiescript_injected [dir=rtl] .mdc-switch__handle-track,#cookiescript_injected_fsd .mdc-switch__handle-track[dir=rtl],#cookiescript_injected_fsd [dir=rtl] .mdc-switch__handle-track{left:auto;right:0}#cookiescript_injected .mdc-switch--selected .mdc-switch__handle-track,#cookiescript_injected_fsd .mdc-switch--selected .mdc-switch__handle-track{-webkit-transform:translateX(100%);transform:translateX(100%)}#cookiescript_injected .mdc-switch--selected .mdc-switch__handle-track[dir=rtl],#cookiescript_injected [dir=rtl] .mdc-switch--selected .mdc-switch__handle-track,#cookiescript_injected_fsd .mdc-switch--selected .mdc-switch__handle-track[dir=rtl],#cookiescript_injected_fsd [dir=rtl] .mdc-switch--selected .mdc-switch__handle-track{-webkit-transform:translateX(-100%);transform:translateX(-100%)}#cookiescript_injected .mdc-switch__handle,#cookiescript_injected_fsd .mdc-switch__handle{display:flex;pointer-events:auto;position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);left:0;right:auto}#cookiescript_injected .mdc-switch__handle[dir=rtl],#cookiescript_injected [dir=rtl] .mdc-switch__handle,#cookiescript_injected_fsd .mdc-switch__handle[dir=rtl],#cookiescript_injected_fsd [dir=rtl] .mdc-switch__handle{left:auto;right:0}#cookiescript_injected .mdc-switch__handle::after,#cookiescript_injected .mdc-switch__handle::before,#cookiescript_injected_fsd .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch__handle::before{border:1px solid transparent;border-radius:inherit;box-sizing:border-box;content:"";width:100%;height:100%;left:0;position:absolute;top:0;transition:background-color 75ms 0s cubic-bezier(.4,0,.2,1),border-color 75ms 0s cubic-bezier(.4,0,.2,1);z-index:-1}#cookiescript_injected .mdc-switch__shadow,#cookiescript_injected_fsd .mdc-switch__shadow{border-radius:inherit;bottom:0;left:0;position:absolute;right:0;top:0}#cookiescript_injected .mdc-elevation-overlay,#cookiescript_injected_fsd .mdc-elevation-overlay{bottom:0;left:0;right:0;top:0}#cookiescript_injected .mdc-switch__ripple,#cookiescript_injected_fsd .mdc-switch__ripple{left:50%;position:absolute;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);z-index:-1}#cookiescript_injected .mdc-switch:disabled .mdc-switch__ripple,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__ripple{display:none}#cookiescript_injected .mdc-switch__icons,#cookiescript_injected_fsd .mdc-switch__icons{height:100%;position:relative;width:100%;z-index:1}#cookiescript_injected .mdc-switch__icon,#cookiescript_injected_fsd .mdc-switch__icon{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0;opacity:0;transition:opacity 30ms 0s cubic-bezier(.4,0,1,1)}#cookiescript_injected .mdc-switch--selected .mdc-switch__icon--on,#cookiescript_injected .mdc-switch--unselected .mdc-switch__icon--off,#cookiescript_injected_fsd .mdc-switch--selected .mdc-switch__icon--on,#cookiescript_injected_fsd .mdc-switch--unselected .mdc-switch__icon--off{opacity:1;transition:opacity 45ms 30ms cubic-bezier(0,0,.2,1)}#cookiescript_injected .mdc-switch,#cookiescript_injected_fsd .mdc-switch{will-change:transform,opacity}@-webkit-keyframes mdc-ripple-fg-radius-in{from{-webkit-animation-timing-function:cubic-bezier(.4,0,.2,1);animation-timing-function:cubic-bezier(.4,0,.2,1);-webkit-transform:translate(0) scale(1);transform:translate(0) scale(1)}to{-webkit-transform:translate(0) scale(1);transform:translate(0) scale(1)}}@keyframes mdc-ripple-fg-radius-in{from{-webkit-animation-timing-function:cubic-bezier(.4,0,.2,1);animation-timing-function:cubic-bezier(.4,0,.2,1);-webkit-transform:translate(0) scale(1);transform:translate(0) scale(1)}to{-webkit-transform:translate(0) scale(1);transform:translate(0) scale(1)}}@-webkit-keyframes mdc-ripple-fg-opacity-in{from{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:0}to{opacity:.1}}@keyframes mdc-ripple-fg-opacity-in{from{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:0}to{opacity:.1}}@-webkit-keyframes mdc-ripple-fg-opacity-out{from{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:.1}to{opacity:0}}@keyframes mdc-ripple-fg-opacity-out{from{-webkit-animation-timing-function:linear;animation-timing-function:linear;opacity:.1}to{opacity:0}}#cookiescript_injected .mdc-switch .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch .mdc-switch__ripple::before{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}#cookiescript_injected .mdc-switch .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch .mdc-switch__ripple::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1}#cookiescript_injected .mdc-switch .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch .mdc-switch__ripple::after{z-index:0}#cookiescript_injected .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::before{-webkit-transform:scale(1);transform:scale(1)}#cookiescript_injected .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::after{top:0;left:0;-webkit-transform:scale(0);transform:scale(0);-webkit-transform-origin:center center;transform-origin:center center}#cookiescript_injected .mdc-switch.mdc-ripple-upgraded--unbounded .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded--unbounded .mdc-switch__ripple::after{top:0;left:0}#cookiescript_injected .mdc-switch.mdc-ripple-upgraded--foreground-activation .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded--foreground-activation .mdc-switch__ripple::after{-webkit-animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards;animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}#cookiescript_injected .mdc-switch.mdc-ripple-upgraded--foreground-deactivation .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded--foreground-deactivation .mdc-switch__ripple::after{-webkit-animation:mdc-ripple-fg-opacity-out 150ms;animation:mdc-ripple-fg-opacity-out 150ms;-webkit-transform:translate(0) scale(1);transform:translate(0) scale(1)}#cookiescript_injected .mdc-switch .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch .mdc-switch__ripple::before{top:calc(50% - 50%);left:calc(50% - 50%);width:100%;height:100%}#cookiescript_injected .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::before{top:0;left:0;width:0;height:0}#cookiescript_injected .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-ripple-upgraded .mdc-switch__ripple::after{width:0;height:0}#cookiescript_injected .mdc-switch,#cookiescript_injected_fsd .mdc-switch{width:36px}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after{background:}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus):not(:active) .mdc-switch__handle::after{background:}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:focus:not(:active) .mdc-switch__handle::after{background:}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:active .mdc-switch__handle::after{background:}#cookiescript_injected .mdc-switch.mdc-switch--selected:disabled .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:disabled .mdc-switch__handle::after{background:#424242}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled .mdc-switch__handle::after{background:#616161}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus):not(:active) .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus):not(:active) .mdc-switch__handle::after{background:#212121}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:focus:not(:active) .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:focus:not(:active) .mdc-switch__handle::after{background:#212121}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:active .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:active .mdc-switch__handle::after{background:#212121}#cookiescript_injected .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__handle::after{background:#424242}#cookiescript_injected .mdc-switch .mdc-switch__handle::before,#cookiescript_injected_fsd .mdc-switch .mdc-switch__handle::before{background:#fff}#cookiescript_injected .mdc-switch:enabled .mdc-switch__shadow,#cookiescript_injected_fsd .mdc-switch:enabled .mdc-switch__shadow{box-shadow:0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);--mdc-elevation-box-shadow-for-gss:0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0, 0, 0, 0.12)}#cookiescript_injected .mdc-switch:disabled .mdc-switch__shadow,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__shadow{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12);--mdc-elevation-box-shadow-for-gss:0px 0px 0px 0px rgba(0, 0, 0, 0.2),0px 0px 0px 0px rgba(0, 0, 0, 0.14),0px 0px 0px 0px rgba(0, 0, 0, 0.12)}#cookiescript_injected .mdc-switch .mdc-switch__handle,#cookiescript_injected_fsd .mdc-switch .mdc-switch__handle{height:20px}#cookiescript_injected .mdc-switch:disabled .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__handle::after{opacity:.38}#cookiescript_injected .mdc-switch .mdc-switch__handle,#cookiescript_injected_fsd .mdc-switch .mdc-switch__handle{border-radius:10px}#cookiescript_injected .mdc-switch .mdc-switch__handle,#cookiescript_injected_fsd .mdc-switch .mdc-switch__handle{width:20px}#cookiescript_injected .mdc-switch .mdc-switch__handle-track,#cookiescript_injected_fsd .mdc-switch .mdc-switch__handle-track{width:calc(100% - 20px)}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled .mdc-switch__icon,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled .mdc-switch__icon{fill:#fff}#cookiescript_injected .mdc-switch.mdc-switch--selected:disabled .mdc-switch__icon,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:disabled .mdc-switch__icon{fill:#fff}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled .mdc-switch__icon,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled .mdc-switch__icon{fill:#fff}#cookiescript_injected .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__icon,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__icon{fill:#fff}#cookiescript_injected .mdc-switch.mdc-switch--selected:disabled .mdc-switch__icons,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:disabled .mdc-switch__icons{opacity:.38}#cookiescript_injected .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__icons,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__icons{opacity:.38}#cookiescript_injected .mdc-switch.mdc-switch--selected .mdc-switch__icon,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected .mdc-switch__icon{width:18px;height:18px}#cookiescript_injected .mdc-switch.mdc-switch--unselected .mdc-switch__icon,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected .mdc-switch__icon{width:18px;height:18px}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus) .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus) .mdc-switch__ripple::before{background-color:}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:focus .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:focus .mdc-switch__ripple::before{background-color:}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:active .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:active .mdc-switch__ripple::before{background-color:}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus) .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus) .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus) .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus) .mdc-switch__ripple::before{background-color:#424242}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:focus .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:focus .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:focus .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:focus .mdc-switch__ripple::before{background-color:#424242}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:active .mdc-switch__ripple::after,#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:active .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:active .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:active .mdc-switch__ripple::before{background-color:#424242}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus).mdc-ripple-surface--hover .mdc-switch__ripple::before,#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus):hover .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus).mdc-ripple-surface--hover .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:hover:not(:focus):hover .mdc-switch__ripple::before{opacity:.04}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:focus.mdc-ripple-upgraded--background-focused .mdc-switch__ripple::before,#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:focus:not(.mdc-ripple-upgraded):focus .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:focus.mdc-ripple-upgraded--background-focused .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:focus:not(.mdc-ripple-upgraded):focus .mdc-switch__ripple::before{transition-duration:75ms;opacity:.12}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:active:not(.mdc-ripple-upgraded) .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:active:not(.mdc-ripple-upgraded) .mdc-switch__ripple::after{transition:opacity 150ms linear}#cookiescript_injected .mdc-switch.mdc-switch--selected:enabled:active:not(.mdc-ripple-upgraded):active .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:enabled:active:not(.mdc-ripple-upgraded):active .mdc-switch__ripple::after{transition-duration:75ms;opacity:.1}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus).mdc-ripple-surface--hover .mdc-switch__ripple::before,#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus):hover .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus).mdc-ripple-surface--hover .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:hover:not(:focus):hover .mdc-switch__ripple::before{opacity:.04}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:focus.mdc-ripple-upgraded--background-focused .mdc-switch__ripple::before,#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:focus:not(.mdc-ripple-upgraded):focus .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:focus.mdc-ripple-upgraded--background-focused .mdc-switch__ripple::before,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:focus:not(.mdc-ripple-upgraded):focus .mdc-switch__ripple::before{transition-duration:75ms;opacity:.12}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:active:not(.mdc-ripple-upgraded) .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:active:not(.mdc-ripple-upgraded) .mdc-switch__ripple::after{transition:opacity 150ms linear}#cookiescript_injected .mdc-switch.mdc-switch--unselected:enabled:active:not(.mdc-ripple-upgraded):active .mdc-switch__ripple::after,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:enabled:active:not(.mdc-ripple-upgraded):active .mdc-switch__ripple::after{transition-duration:75ms;opacity:.1}#cookiescript_injected .mdc-switch .mdc-switch__ripple,#cookiescript_injected_fsd .mdc-switch .mdc-switch__ripple{height:48px;width:48px}#cookiescript_injected .mdc-switch .mdc-switch__track,#cookiescript_injected_fsd .mdc-switch .mdc-switch__track{height:14px}#cookiescript_injected .mdc-switch:disabled .mdc-switch__track,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__track{opacity:.12}#cookiescript_injected .mdc-switch:enabled .mdc-switch__track::after{background:;opacity:0.3}#cookiescript_injected .mdc-switch:enabled:hover:not(:focus):not(:active) .mdc-switch__track::after{background:;opacity:0.3}#cookiescript_injected .mdc-switch:enabled:focus:not(:active) .mdc-switch__track::after{background:;opacity:0.3}#cookiescript_injected .mdc-switch:enabled:active .mdc-switch__track::after{background:;opacity:0.3}#cookiescript_injected .mdc-switch:disabled .mdc-switch__track::after,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__track::after{background:#424242}#cookiescript_injected .mdc-switch:enabled .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch:enabled .mdc-switch__track::before{background:#e0e0e0}#cookiescript_injected .mdc-switch:enabled:hover:not(:focus):not(:active) .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch:enabled:hover:not(:focus):not(:active) .mdc-switch__track::before{background:#e0e0e0}#cookiescript_injected .mdc-switch:enabled:focus:not(:active) .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch:enabled:focus:not(:active) .mdc-switch__track::before{background:#e0e0e0}#cookiescript_injected .mdc-switch:enabled:active .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch:enabled:active .mdc-switch__track::before{background:#e0e0e0}#cookiescript_injected .mdc-switch:disabled .mdc-switch__track::before,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__track::before{background:#424242}#cookiescript_injected .mdc-switch .mdc-switch__track,#cookiescript_injected_fsd .mdc-switch .mdc-switch__track{border-radius:7px}@media screen and (forced-colors:active),(-ms-high-contrast:active){#cookiescript_injected .mdc-switch:disabled .mdc-switch__handle::after,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__handle::after{opacity:1}#cookiescript_injected .mdc-switch.mdc-switch--selected:disabled .mdc-switch__icons,#cookiescript_injected_fsd .mdc-switch.mdc-switch--selected:disabled .mdc-switch__icons{opacity:1}#cookiescript_injected .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__icons,#cookiescript_injected_fsd .mdc-switch.mdc-switch--unselected:disabled .mdc-switch__icons{opacity:1}#cookiescript_injected .mdc-switch:disabled .mdc-switch__track,#cookiescript_injected_fsd .mdc-switch:disabled .mdc-switch__track{opacity:1}}
+/*End Toggle*/
+
+#cookiescript_injected {
+bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    padding: 15px 50px 15px 50px;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0;
+    max-height: 85%;
+    overflow-y: auto;
+    align-items: center;
+}
+#cookiescript_toppart,#cookiescript_bottompart {
+	width: 100%;
+}
+#cookiescript_toppart{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+    margin: 0;
+}
+#cookiescript_rightpart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+	min-width: 25%;
+}
+#cookiescript_copyright {
+    text-align: left;
+    line-height: 1;
+    margin:4px 0 0 0;
+}
+
+#cookiescript_buttons {
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 0;
+    font-weight: 700;
+    width:100%;
+	flex-direction: column;
+}
+
+#cookiescript_manage_wrap {
+    margin: 3px 0 10px 0;
+	text-align: left;
+}
+#cookiescript_header {
+    margin: 0 0 10px 0;
+    text-align: left;
+    padding: 14px 0 0 0;
+}
+#cookiescript_checkboxs {
+    margin: 0 0 0 -11px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.cookiescript_checkbox_label{
+    padding: 0;
+    margin: 0 10px 0 -2px;
+}
+.cookiescript_checkbox {
+    margin: 0;
+}
+#cookiescript_accept, #cookiescript_reject, #cookiescript_save {
+    margin: 5px 7px;
+    flex-shrink: 1;
+    padding: 0 17px;
+}
+#cookiescript_description{
+    text-align: left;
+    font-size: 12px;
+    margin: 0;
+}
+#cookiescript_readmore{
+	font-size: 12px;
+}
+#cookiescript_leftpart {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    max-width: 65%;
+}
+
+#cookiescript_injected.hascookiereport #cookiescript_rightpart{
+	align-items:baseline;
+}
+#cookiescript_leftpart{
+	-ms-flex: 0 1 741px;
+}
+#cookiescript_rightpart, {
+	-ms-flex: 0 1 285px;
+}
+#cookiescript_buttons{
+	-ms-flex: 0 1 100%;
+}
+#cookiescript_cookietablewrap {
+    transition: height 300ms 0ms, min-height 300ms 0ms, max-height 300ms 0ms, opacity 200ms 300ms;
+}
+#cookiescript_cookietablewrap.cookiescript_hidden {
+    transition: height 300ms 0ms, min-height 300ms 0ms, max-height 300ms 0ms, opacity 200ms 0ms;
+}
+@media only screen and (max-width: 1024px){
+    #cookiescript_buttons {
+        flex-wrap: wrap;
+    }
+    #cookiescript_accept, #cookiescript_reject, #cookiescript_save{
+        max-width: 100%;
+    }
+}
+@media only screen and (max-width: 700px) {
+	#cookiescript_injected{
+		padding: 15px 20px;
+	}
+	#cookiescript_toppart{
+		flex-direction: column;
+	}
+	#cookiescript_leftpart,#cookiescript_rightpart{
+		width:100%;
+		max-width:100%;
+		margin: 0;
+		-ms-flex:none;
+	}
+	#cookiescript_buttons {
+        flex-wrap: wrap;
+        width:100%;
+		flex-direction: row;
+    }
+    #cookiescript_accept, #cookiescript_reject, #cookiescript_save{
+		flex-grow: 1;
+    }
+    .hascookiereport #cookiescript_toppart{
+    	margin-bottom:10px;
+    }
+    
+}
+@media only screen and (max-width: 414px) {
+    #cookiescript_injected{
+        flex-direction: column;
+        width: 100%;
+        padding: 15px;
+    }
+    #cookiescript_rightpart{
+        flex-direction: column;
+    }
+
+    #cookiescript_buttons{
+        flex-wrap: wrap;
+    }
+}
+
+#cookiescript_accept, #cookiescript_reject, #cookiescript_save {
+	border-radius: 20px;
+}
+/*IE 9 fixes*/
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {
+	.cookiescript_checkbox{
+		display: inline-block;
+	}
+	#cookiescript_buttons{
+		margin-top:5%;
+	}
+	#cookiescript_leftpart{
+		float:left;
+		width:60%;
+	}
+	#cookiescript_rightpart{
+		float:right;
+		width:38%;
+		margin: 0;
+	}
+	#cookiescript_injected{
+		padding: 15px 20px;
+	}
+	#cookiescript_accept, #cookiescript_reject, #cookiescript_save {
+		white-space: normal;
+	}
+	#cookiescript_injected {
+		max-height: 100%;
+	}
+}
+
+
+    </style>
+  <div id="cookiescript_injected" tabindex="0" role="alert" aria-live="assertive" data-nosnippet="" class="" style="display: none;">
+    <div id="cookiescript_close" tabindex="0" role="button" aria-label="Close">×</div>
+<div id="cookiescript_toppart">
+  <div id="cookiescript_leftpart">
+      <div id="cookiescript_description">
+	    <span data-cs-desc-box="true" data-cs-i18n-text="{&quot;en&quot;:&quot;This website uses cookies to improve user experience. By using our website you consent to all cookies in accordance with our Cookie Policy.&quot;}" data-cs-i18n-read="This website uses cookies to improve user experience. By using our website you consent to all cookies in accordance with our Cookie Policy.">
+      This website uses cookies to improve user experience. By using our website you consent to all cookies in accordance with our Cookie Policy.    </span>
+
+    
+      
+      <a id="cookiescript_readmore" data-cs-i18n-text="{&quot;en&quot;:&quot;Read more&quot;}" data-cs-i18n-url="{&quot;en&quot;:&quot;\/cookies.htm&quot;}" href="https://sound-au.com/cookies.htm" target="_blank" aria-label="Read more, opens a new window">
+        Read more      </a>
+
+      </div>
+  <div id="cookiescript_checkboxs">
+          
+            <div class="cookiescript_checkbox">
+        <div class="mdc-checkbox" role="button">
+          <input tabindex="0" id="cookiescript_category_strict" data-cookiescript="checkbox-input" type="checkbox" class="mdc-checkbox__native-control cookiescript_checkbox_input" value="strict" disabled="" checked="">
+          <div class="mdc-checkbox__background">
+            <svg role="presentation" class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+            </svg>
+          </div>
+        </div>
+        <label class="cookiescript_checkbox_label" for="cookiescript_category_strict">
+          <span class="cookiescript_checkbox_text" data-cs-i18n-text="{&quot;en&quot;:&quot;Strictly necessary&quot;}">
+            Strictly necessary          </span>
+        </label>
+      </div>
+
+          
+            <div class="cookiescript_checkbox">
+        <div class="mdc-checkbox" role="button">
+          <input tabindex="0" id="cookiescript_category_performance" data-cookiescript="checkbox-input" type="checkbox" class="mdc-checkbox__native-control cookiescript_checkbox_input" value="performance">
+          <div class="mdc-checkbox__background">
+            <svg role="presentation" class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+            </svg>
+          </div>
+        </div>
+        <label class="cookiescript_checkbox_label" for="cookiescript_category_performance">
+          <span class="cookiescript_checkbox_text" data-cs-i18n-text="{&quot;en&quot;:&quot;Performance&quot;}">
+            Performance          </span>
+        </label>
+      </div>
+
+          
+            <div class="cookiescript_checkbox">
+        <div class="mdc-checkbox" role="button">
+          <input tabindex="0" id="cookiescript_category_targeting" data-cookiescript="checkbox-input" type="checkbox" class="mdc-checkbox__native-control cookiescript_checkbox_input" value="targeting">
+          <div class="mdc-checkbox__background">
+            <svg role="presentation" class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+            </svg>
+          </div>
+        </div>
+        <label class="cookiescript_checkbox_label" for="cookiescript_category_targeting">
+          <span class="cookiescript_checkbox_text" data-cs-i18n-text="{&quot;en&quot;:&quot;Targeting&quot;}">
+            Targeting          </span>
+        </label>
+      </div>
+
+          
+            <div class="cookiescript_checkbox">
+        <div class="mdc-checkbox" role="button">
+          <input tabindex="0" id="cookiescript_category_functionality" data-cookiescript="checkbox-input" type="checkbox" class="mdc-checkbox__native-control cookiescript_checkbox_input" value="functionality">
+          <div class="mdc-checkbox__background">
+            <svg role="presentation" class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+            </svg>
+          </div>
+        </div>
+        <label class="cookiescript_checkbox_label" for="cookiescript_category_functionality">
+          <span class="cookiescript_checkbox_text" data-cs-i18n-text="{&quot;en&quot;:&quot;Functionality&quot;}">
+            Functionality          </span>
+        </label>
+      </div>
+
+          
+            <div class="cookiescript_checkbox">
+        <div class="mdc-checkbox" role="button">
+          <input tabindex="0" id="cookiescript_category_unclassified" data-cookiescript="checkbox-input" type="checkbox" class="mdc-checkbox__native-control cookiescript_checkbox_input" value="unclassified">
+          <div class="mdc-checkbox__background">
+            <svg role="presentation" class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+            </svg>
+          </div>
+        </div>
+        <label class="cookiescript_checkbox_label" for="cookiescript_category_unclassified">
+          <span class="cookiescript_checkbox_text" data-cs-i18n-text="{&quot;en&quot;:&quot;Unclassified&quot;}">
+            Unclassified          </span>
+        </label>
+      </div>
+
+      </div>
+
+  <div id="cookiescript_manage_wrap" tabindex="0" role="button">
+    <div id="cookiescript_manage">
+      <svg role="presentation" id="cookiescript_manageicon" viewBox="0 0 9.62 9.57">
+        <g id="Layer_2">
+          <g id="Layer_1-2">
+            <path class="cookiescript_gear" d="M9.46,6.06l-1.1-.78c0-.16.06-.31.06-.47a1.27,1.27,0,0,0-.06-.47L9.57,3.4l-1.15-2L7,1.93a2.74,2.74,0,0,0-.83-.47L6,0H3.61L3.35,1.46a7.14,7.14,0,0,0-.79.47L1.15,1.36,0,3.4l1.15.94c0,.16,0,.31,0,.47a1.51,1.51,0,0,0,0,.47l-1,.78A.75.75,0,0,0,0,6.17l1.15,2,1.41-.58a2.49,2.49,0,0,0,.84.47l.21,1.47H6a.53.53,0,0,1,0-.21L6.22,8.1a4,4,0,0,0,.84-.47l1.41.58,1.15-2A.75.75,0,0,0,9.46,6.06Zm-4.65.19A1.47,1.47,0,1,1,6.28,4.78,1.47,1.47,0,0,1,4.81,6.25Z"></path>
+          </g>
+        </g>
+      </svg>
+      <span data-cs-show-title="cookie-script" data-cs-i18n-text="{&quot;en&quot;:&quot;Show details&quot;}" style="">
+        Show details      </span>
+      <span style="display: none;" data-cs-hide-title="cookie-script" data-cs-i18n-text="{&quot;en&quot;:&quot;Hide details&quot;}">
+        Hide details      </span>
+    </div>
+  </div>
+  </div>
+  <div id="cookiescript_rightpart">
+      <div id="cookiescript_buttons">
+          <div id="cookiescript_save" tabindex="0" role="button" data-cs-i18n-text="{&quot;en&quot;:&quot;Save &amp; Close&quot;}">
+        Save &amp; Close      </div>
+              <div id="cookiescript_accept" tabindex="0" role="button" data-cs-i18n-text="{&quot;en&quot;:&quot;Accept all&quot;}">
+        Accept all      </div>
+              <div id="cookiescript_reject" tabindex="0" role="button" data-cs-i18n-text="{&quot;en&quot;:&quot;Decline all&quot;}">
+        Decline all      </div>
+      </div>
+  </div>
+</div>
+<div id="cookiescript_bottompart">
+		<div class="cookiescript_hidden" id="cookiescript_cookietablewrap">
+			</div>
+		
+  <div id="cookiescript_copyright">
+    <a href="https://cookie-script.com/" target="_blank" aria-label="Powered by CookieScript, opens a new window" id="cookiescript_link" title="Consent Management Platform">
+      Powered by CookieScript
+    </a>
+  </div>
+</div>
+</div>
+  
+  <div id="cookiescript_badge" tabindex="0" role="alert" aria-live="assertive" style="">
+          <div id="cookiescript_badgeimage">
+        <svg id="cookiescript_badgesvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320.28 320.28">
+          <defs>
+            <style>
+              .cookiescriptlogo {fill: #22b8f0;}
+            </style>
+          </defs>
+          <g id="cs_layer_2" data-name="cs_layer_2">
+            <g id="cs_layer_1" data-name="cs_layer_1">
+              <path class="cookiescriptlogo" d="M160.14,0A160.14,160.14,0,1,0,320.28,160.14,160.14,160.14,0,0,0,160.14,0Zm0,301.49A141.35,141.35,0,1,1,301.49,160.14,141.35,141.35,0,0,1,160.14,301.49Z"></path>
+              <circle class="cookiescriptlogo" cx="98.09" cy="106.52" r="35.11"></circle>
+              <circle class="cookiescriptlogo" cx="88.27" cy="200.63" r="14.09"></circle>
+              <circle class="cookiescriptlogo" cx="151.17" cy="251.06" r="22.63"></circle>
+              <circle class="cookiescriptlogo" cx="238.42" cy="180.9" r="30.49"></circle>
+              <circle class="cookiescriptlogo" cx="206.65" cy="86.27" r="18.53"></circle>
+            </g>
+          </g>
+        </svg>
+      </div>
+              <div id="cookiescript_badgetext" data-cs-i18n-text="{&quot;en&quot;:&quot;Cookie settings&quot;}">
+        Cookie settings      </div>
+      </div>
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

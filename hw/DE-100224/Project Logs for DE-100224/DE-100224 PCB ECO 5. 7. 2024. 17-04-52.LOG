@@ -1,0 +1,16 @@
+Added Component: Designator=P3(TERMINAL BLOK 3)
+Add component. Clean all parameters for all variants
+Added Component: Designator=P4(TERMINAL BLOK 2)
+Add component. Clean all parameters for all variants
+Added Component: Designator=P5(TERMINAL BLOK 2)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=+5V Pin=P3-1
+Added Pin To Net: NetName=GND Pin=P3-2
+Added Pin To Net: NetName=+24V Pin=P3-3
+Added Pin To Net: NetName=COMMON_ERROR Pin=P4-1
+Added Pin To Net: NetName=ZEROCROSS Pin=P4-2
+Added Pin To Net: NetName=TRIAC_CTRL Pin=P5-1
+Added Pin To Net: NetName=RELAY_CTRL Pin=P5-2
+Added Member To Class: ClassName=DE-100224_01 Member=Component P3 
+Added Member To Class: ClassName=DE-100224_01 Member=Component P4 
+Added Member To Class: ClassName=DE-100224_01 Member=Component P5 
