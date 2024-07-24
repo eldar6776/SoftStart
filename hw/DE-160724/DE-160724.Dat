@@ -1,0 +1,52 @@
+﻿Field=#~Integer~#~50|Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~DE-160724.PrjPcb|ReportField=ProjectFullPath~D:\ProjektiOtvoreni\SoftStart\hw\DE-160724\DE-160724.PrjPcb|ReportField=Title~Bill of Materials For Project [DE-160724.PrjPcb] (No PCB Document Selected)|ReportField=TotalQuantity~101|ReportField=ReportTime~12:55:19|ReportField=ReportDate~22. 7. 2024.|ReportField=ReportDateTime~22. 7. 2024. 12:55:19|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~Braće Mulić 81|ReportField=Address2~71000 Sarajevo|ReportField=Address3~Federacija BiH|ReportField=Address4~Bosna i Hercegovina|ReportField=Application_BuildNumber~|ReportField=ApprovedBy~|ReportField=Author~eldar6776@hotmail.com|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~22. 7. 2024.|ReportField=CurrentTime~12:55:15|ReportField=Date~|ReportField=DocumentFullPathAndName~D:\ProjektiOtvoreni\SoftStart\hw\DE-160724\DE-160724.SchDoc|ReportField=DocumentName~DE-160724.SchDoc|ReportField=DocumentNumber~DE-100224|ReportField=DrawnBy~Eldar Dedic|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~22. 7. 2024.|ReportField=Organization~JUBERA d.o.o.|ReportField=ProjectName~DE-160724.PrjPcb|ReportField=Revision~278|ReportField=Rule~|ReportField=SheetNumber~1|ReportField=SheetTotal~2|ReportField=Time~|ReportField=Title~Toroid soft start|ReportField=DataSourceFileName~DE-160724.PrjPcb|ReportField=DataSourceFullPath~D:\ProjektiOtvoreni\SoftStart\hw\DE-160724\DE-160724.PrjPcb|ReportField=PCBConfigurationName~Sources|ReportField=Item~|ReportField=ItemRevision~|ReportField=ItemAndRevision~|ReportField=ItemRevisionBase~|ReportField=ItemRevisionLevel1~|ReportField=ItemRevisionLevel2~|ReportField=ItemRevisionLevel1AndBase~|ReportField=ItemRevisionLevel2AndLevel1~
+1|10uF|Ceramic Chip Capacitor - Standard|C1|0805|C0805|1
+2|100nF|Ceramic Chip Capacitor - Standard|C2, C5, C7, C10, C14, C15|0603|C0603|6
+3|47nF|X2 275VAC capaitor|C3, C4|X2 CAP|CAP X2|2
+4|4u7|Ceramic Chip Capacitor - Standard|C6|0805|C0805|1
+5|1uF|Ceramic Chip Capacitor - Standard|C8, C16, C17, C18, C19, C21|0603|C0603|6
+6|10nF|Ceramic Chip Capacitor - Standard|C9|0603|C0603|1
+7|C1206|Ceramic Chip Capacitor - Standard|C11, C20|1206|C1206|2
+8|4700uF|Aluminum Electrolytic Capacitor, Radial Style with Long Leads: 4700uF, 10V|C12|CAPPR5-13X25|EKA00GG447C00|1
+9|470uF|Aluminum Electrolytic Capacitor, Radial Style with Long Leads: 470uF, 35V|C13|CAPPR5-10X16|EKA00DD347F00|1
+10|1N4148|Schottky Barrier Diode|D1, D2, D3, D5, D6, D7, D10|SOD323|1PS76SB10|7
+11|ZD12V|Schottky Rectifier|D4|SMB|10BQ100|1
+12|BTA16-600|Triacs, Silicon Bidirectional Thyristor, 3-Pin TO-220, Pb-Free, Tube|D8|ONSC-TO-220-3-221A-07|BTA08-600BW3G|1
+13|ZD8V2|1.0 Ampere General Purpose Rectifier|D9|DO-41|1N4003|1
+14|S3GB|Schottky Diode|D11, D12, D13, D14|SMB|D Schottky|4
+15|STATUS_LED|Blue Surface Mount Chip LED, Blue|D15|1.6X0.8X0.8|HSMB-C190|1
+16|1N4001|Schottky Diode|D16, D17, D18, D19|SMB|D Schottky|4
+17|HF25F|PCB relay 250VAC/20A 30VDC/16A|K1|HF25F|HF25F|1
+18|KONEKTOR 4 PINA|Razdvojivi konektor 4 pina|P1|KONEKTOR 4 PINA|KONEKTOR 4 PINA|1
+19|RS485|Terminal blok konektor 3,5 mm|P2|TERMINAL BLOK 2|TERMINAL BLOK 2|1
+20|POWER|3 pinski terminal blok konektor|P3|TERMINAL BLOK 3|TERMINAL BLOK 3|1
+21|CTRL|Terminal blok konektor 3,5 mm|P4|TERMINAL BLOK 2|TERMINAL BLOK 2|1
+22|ICSP|Header, 3-Pin|P5|HDR1X3|Header 3|1
+23|PWR_TRAFO|Razdvojivi konetor 2 pina|P6|KONEKTOR 2 PINA|KONEKTOR 2 PINA|1
+24|NTC10K|Header, 2-Pin|P7, P9|HDR1X2|Header 2|2
+25|HEAT_TRAFO|Razdvojivi konetor 2 pina|P8|KONEKTOR 2 PINA|KONEKTOR 2 PINA|1
+26|MMBT2222A|NPN General-purpose Transistor|Q1|SOT23_N|BC817|1
+27|BC807|PNP General-purpose Transistor|Q2, Q3|SOT23_N|BC807|2
+28|1K|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W, Rectangular Thick Film Chip Resistor, 10 Ohm to 1M Ohm Range, 0.1% and 0.5% Tolerance, 0805 Size, 0.1 W, Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W, Rectangular Thick Film Chip Resistor, 10 Ohm to 1M Ohm Range, 0.1% and 0.5% Tolerance, 0805 Size, 0.1 W, Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W, Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W, Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R1, R13, R22, R32, R33, R36, R39|ERA-0603|ERAV, ERA6Y, ERAV, ERA6Y, ERAV, ERAV, ERAV|7
+29|3K9|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R2|ERA-0603|ERAV|1
+30|39K|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R3, R12|ERA-0603|ERAV|2
+31|18K|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0805 Size, 0.1 W|R4, R5, R6, R8, R9, R10|ERA-0805|ERAS|6
+32|1K2|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R7|ERA-0603|ERAV|1
+33|2K2|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R11|ERA-0603|ERAV|1
+34|220R|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0805 Size, 0.1 W|R14, R15, R16, R17|ERA-0805|ERAS|4
+35|180R|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R18|ERA-0603|ERAV|1
+36|100R|Carbon F 1W resistor|R19|1W100R|1W100R|1
+37|47R|Resistor|R20|AXIAL-0.3|Res1|1
+38|10R|Rectangular Thick Film Chip Resistor, 10 Ohm to 1M Ohm Range, 0.1% and 0.5% Tolerance, 0805 Size, 0.1 W|R21|ERA-0603|ERA6Y|1
+39|10K|Rectangular Thick Film Chip Resistor, 10 Ohm to 1M Ohm Range, 0.1% and 0.5% Tolerance, 0805 Size, 0.1 W, Rectangular Thick Film Chip Resistor, 10 Ohm to 1M Ohm Range, 0.1% and 0.5% Tolerance, 0805 Size, 0.1 W, Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W, Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R23, R26, R31, R35|ERA-0603|ERA6Y, ERA6Y, ERAV, ERAV|4
+40|NF|Rectangular Thick Film Chip Resistor, 10 Ohm to 1M Ohm Range, 0.1% and 0.5% Tolerance, 0805 Size, 0.1 W|R24, R27, R28, R29|ERA-0603|ERA6Y|4
+41|100K|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R25|ERA-0603|ERAV|1
+42|4K7|Rectangular Thick Film Chip Resistor, 10 Ohm to 1M Ohm Range, 0.1% and 0.5% Tolerance, 0805 Size, 0.1 W|R30, R34, R38, R40|ERA-0603|ERA6Y|4
+43|33K|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R37|ERA-0603|ERAV|1
+44|3K3|Metal Film Thermosensitive Chip Resistor, 0.56 Ohm to 10k Ohm Range, 5% Tolerance, 0603 Size, 0.063 W|R41|ERA-0603|ERAV|1
+45|PC817|4-Pin Phototransistor Optocoupler|U1|DIP-4|PC817|1
+46|LM393MX|Low Power Low Offset Voltage Dual Comparator, 8-pin Narrow SOIC|U2|M08A_N|LM393MX|1
+47|MAX485|Differential Bus Transceiver|U3|D008_L|SN75176BD|1
+48|MOC3052|Zero-Cross Optoisolator Triac Driver|U4|DIP6|MOC3081|1
+49|STM32F030F4P6|ARM Cortex-M0 32-bit MCU, 16 KB Flash, 4 KB Internal RAM, 15 I/Os, 20-pin TSSOP, -40 to 85 degC, Tube|U5|STM-TSSOP20_N|STM32F030F4P6|1
+50|L78M05CV|Positive Voltage Regulator, 5V, 3-Pin TO-220|U6|TO220|L78M05CV|1
+51|REG1117-3.3|800mA and 1A Low Dropout Positive Regulator 2.85V, 3.3V, 5V, and Adjustable|U7|ZZ311|REG1117-3.3|1
