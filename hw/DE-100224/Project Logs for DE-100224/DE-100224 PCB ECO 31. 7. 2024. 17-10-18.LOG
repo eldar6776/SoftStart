@@ -1,0 +1,21 @@
+Change Component Comment : Designator=D13 Old Comment=1N4001 New Comment=S3GB
+Change Component Comment : Designator=D14 Old Comment=1N4001 New Comment=S3GB
+Change Component Comment : Designator=D18 Old Comment=1N4001 New Comment=S3GB
+Change Component Comment : Designator=D19 Old Comment=1N4001 New Comment=S3GB
+Added Component: Designator=P1(KONEKTOR 4 PINA)
+Add component. Clean all parameters for all variants
+Added Component: Designator=P7(KONEKTOR 2 PINA)
+Add component. Clean all parameters for all variants
+Added Component: Designator=P8(KONEKTOR 2 PINA)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=AC_L Pin=P1-1
+Added Pin To Net: NetName=AC_O Pin=P1-2
+Added Pin To Net: NetName=AC_N Pin=P1-3
+Added Pin To Net: NetName=AC_N Pin=P1-4
+Added Pin To Net: NetName=NetD12_1 Pin=P7-1
+Added Pin To Net: NetName=NetD11_1 Pin=P7-2
+Added Pin To Net: NetName=NetD13_1 Pin=P8-1
+Added Pin To Net: NetName=NetD14_1 Pin=P8-2
+Added Member To Class: ClassName=DE-100224_01 Member=Component P1 KONEKTOR 4 PINA
+Added Member To Class: ClassName=DE-100224_01 Member=Component P7 HEAT_TRAFO
+Added Member To Class: ClassName=DE-100224_01 Member=Component P8 PWR_TRAFO
