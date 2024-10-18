@@ -1,0 +1,30 @@
+Add Component: Footprint Not Found 0603
+Added Component: Designator=P5(TERMINAL BLOK 2)
+Added Component: Designator=P6(TERMINAL BLOK 3)
+Added Component: Designator=P7(TERMINAL BLOK 2)
+Add Component: Footprint Not Found DCK3_N
+Add Pin To Net: Unknown Pin: Pin C18-1
+Add Pin To Net: Unknown Pin: Pin C18-2
+Add Pin To Net: Unknown Pin: Pin P1-P?
+Add Pin To Net: Unknown Pin: Pin P2-P?
+Add Pin To Net: Unknown Pin: Pin P3-P?
+Add Pin To Net: Unknown Pin: Pin P4-P?
+Added Pin To Net: NetName=RS_485_A Pin=P5-1
+Added Pin To Net: NetName=RS_485_B Pin=P5-2
+Added Pin To Net: NetName=NetF1_2 Pin=P6-1
+Added Pin To Net: NetName=GND Pin=P6-2
+Added Pin To Net: NetName=NetF2_2 Pin=P6-3
+Added Pin To Net: NetName=CTRL_IN_ Pin=P7-1
+Added Pin To Net: NetName=STATUS_OUT_ Pin=P7-2
+Add Pin To Net: Unknown Pin: Pin P9-P?
+Add Pin To Net: Unknown Pin: Pin P10-P?
+Add Pin To Net: Unknown Pin: Pin P12-P?
+Add Pin To Net: Unknown Pin: Pin P14-P?
+Add Pin To Net: Unknown Pin: Pin U4-1
+Add Pin To Net: Unknown Pin: Pin U4-2
+Add Pin To Net: Unknown Pin: Pin U4-3
+Add Class Member: Failed to add class member : Component C18 1uF
+Added Member To Class: ClassName=DE-260924 Member=Component P5 RS485
+Added Member To Class: ClassName=DE-260924 Member=Component P6 POWER
+Added Member To Class: ClassName=DE-260924 Member=Component P7 CTRL
+Add Class Member: Failed to add class member : Component U4 ESDS552

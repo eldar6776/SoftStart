@@ -1,0 +1,16 @@
+Added Component: Designator=P9(Single Wire Lug)
+Added Component: Designator=P10(Single Wire Lug)
+Added Component: Designator=P12(WIRE PAD)
+Added Component: Designator=P14(WIRE PAD)
+Add Pin To Net: Unknown Pin: Pin P1-P?
+Add Pin To Net: Unknown Pin: Pin P2-P?
+Add Pin To Net: Unknown Pin: Pin P3-P?
+Add Pin To Net: Unknown Pin: Pin P4-P?
+Added Pin To Net: NetName=NetD12_1 Pin=P9-1
+Added Pin To Net: NetName=NetD11_1 Pin=P10-1
+Add Pin To Net: Unknown Pin: Pin P12-P?
+Add Pin To Net: Unknown Pin: Pin P14-P?
+Added Member To Class: ClassName=DE-260924 Member=Component P9 POWER TRAFO SEC.
+Added Member To Class: ClassName=DE-260924 Member=Component P10 POWER TRAFO SEC.
+Added Member To Class: ClassName=DE-260924 Member=Component P12 HEAT TRAFO SEC.
+Added Member To Class: ClassName=DE-260924 Member=Component P14 HEAT TRAFO SEC.

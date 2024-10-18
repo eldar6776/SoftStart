@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=GND Pin=C19-2
+Removed Pin From Net: NetName=GND Pin=C20-2
+Removed Pin From Net: NetName=GND Pin=D17-2
+Removed Pin From Net: NetName=GND Pin=D18-2
+Removed Pin From Net: NetName=SWCLK Pin=R23-2
+Removed Pin From Net: NetName=SWDIO Pin=R24-2
+Removed Pin From Net: NetName=GND Pin=R36-1
+Removed Member From Class: ClassName=DE-260924 Member=C19
+Removed Member From Class: ClassName=DE-260924 Member=C20
+Removed Member From Class: ClassName=DE-260924 Member=D15
+Removed Member From Class: ClassName=DE-260924 Member=D16
+Removed Member From Class: ClassName=DE-260924 Member=D17
+Removed Member From Class: ClassName=DE-260924 Member=D18
+Removed Member From Class: ClassName=DE-260924 Member=P12
+Removed Member From Class: ClassName=DE-260924 Member=P14
+Removed Member From Class: ClassName=DE-260924 Member=R32
+Removed Member From Class: ClassName=DE-260924 Member=R33
+Removed Member From Class: ClassName=DE-260924 Member=R36
+Added Pin To Net: NetName=SWDIO Pin=R23-2
+Added Pin To Net: NetName=STATUS_LED Pin=R24-2
+Added Pin To Net: NetName=STATUS_LED Pin=U6-11
+Added Net: Name=STATUS_LED

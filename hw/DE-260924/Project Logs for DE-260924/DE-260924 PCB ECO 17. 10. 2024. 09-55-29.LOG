@@ -1,0 +1,14 @@
+Change Component Designator: OldDesignator=C13 NewDesignator=C14
+Change Component Designator: OldDesignator=C14 NewDesignator=C13
+Change Component Designator: OldDesignator=P5 NewDesignator=P4
+Change Component Designator: OldDesignator=P? NewDesignator=P1
+Change Component Designator: OldDesignator=P? NewDesignator=P2
+Change Component Designator: OldDesignator=P? NewDesignator=P3
+Change Component Designator: OldDesignator=P? NewDesignator=P5
+Change Component Designator: OldDesignator=P? NewDesignator=P12
+Change Component Designator: OldDesignator=P? NewDesignator=P14
+Added Member To Class: ClassName=DE-260924 Member=Component P1 220VAC LIVE IN
+Added Member To Class: ClassName=DE-260924 Member=Component P2 220VAC LIVE OUT
+Added Member To Class: ClassName=DE-260924 Member=Component P5 220VAC NEUTRAL IN
+Added Member To Class: ClassName=DE-260924 Member=Component P12 HEAT TRAFO SEC.
+Added Member To Class: ClassName=DE-260924 Member=Component P14 HEAT TRAFO SEC.

@@ -1,0 +1,22 @@
+Removed Member From Class: ClassName=DE-260924 Member=P12
+Removed Member From Class: ClassName=DE-260924 Member=P14
+Change Component Footprint: Designator=P9 Old Footprint=Single Wire Lug New Footprint=WIRE PAD
+Change Component Footprint: Designator=P10 Old Footprint=Single Wire Lug New Footprint=WIRE PAD
+Added Component: Designator=P?(WIRE PAD)
+Added Component: Designator=P?(WIRE PAD)
+Added Component: Designator=P?(WIRE PAD)
+Added Component: Designator=P?(WIRE PAD)
+Added Component: Designator=P?(WIRE PAD)
+Added Component: Designator=P?(WIRE PAD)
+Added Pin To Net: NetName=AC_L Pin=P?-1
+Added Pin To Net: NetName=AC_N Pin=P?-1
+Added Pin To Net: NetName=AC_N Pin=P?-1
+Added Pin To Net: NetName=AC_O Pin=P?-1
+Added Pin To Net: NetName=NetD15_2 Pin=P?-1
+Added Pin To Net: NetName=NetD16_2 Pin=P?-1
+Added Member To Class: ClassName=DE-260924 Member=Component P? 220VAC NEUTRAL IN
+Added Member To Class: ClassName=DE-260924 Member=Component P? HEAT TRAFO SEC.
+Added Member To Class: ClassName=DE-260924 Member=Component P? 220VAC LIVE OUT
+Added Member To Class: ClassName=DE-260924 Member=Component P? 220VAC NEUTRAL OUT
+Added Member To Class: ClassName=DE-260924 Member=Component P? HEAT TRAFO SEC.
+Added Member To Class: ClassName=DE-260924 Member=Component P? 220VAC LIVE IN

@@ -1,0 +1,62 @@
+Add Component: Footprint Not Found 0603
+Added Component: Designator=P5(TERMINAL BLOK 2)
+Added Component: Designator=P6(TERMINAL BLOK 3)
+Added Component: Designator=P7(TERMINAL BLOK 2)
+Added Component: Designator=U4(DCK3_N)
+Add component (AddParameter): Name = "Breakdown Voltage(Min)(V)"; Value = "+/-14"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=TPD2E007&fileType=pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "URL Link1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "SamplesURL:http://www.ti.com/product/tpd2e007#samples"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DatasheetVersion"; Value = "SLVS796E"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Eco-Plan"; Value = "Green (RoHS & no Sb/Br)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "IEC 61000-4-2 Air-Gap(+/- kV)"; Value = "15"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "IEC 61000-4-2 Contact(+/- kV)"; Value = "8"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "IO Capacitance(Typ)(pF)"; Value = "15"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "IO Leakage Current(nA)"; Value = "50"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Texas Instruments"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "3-Pin Plastic Small-Outline Package, 0.65 mm Pitch, 2.1 mm Lead Span"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "DCK3"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "revG, Jan-2007"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PartNumber"; Value = "TPD2E007DCKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SubFamily"; Value = "ESD Solution"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 2"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 3"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 4"; Value = "Farnell"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 5"; Value = "Newark"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 6"; Value = "Newark"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 7"; Value = "Mouser"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "296-25281-2-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 2"; Value = "296-25281-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 3"; Value = "296-25281-6-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 4"; Value = "2120465"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 5"; Value = "94T5089"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 6"; Value = "55R7554"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 7"; Value = "595-TPD2E007DCKR"; VariantName = "[No Variations]"
+Add Pin To Net: Unknown Pin: Pin C18-1
+Add Pin To Net: Unknown Pin: Pin C18-2
+Add Pin To Net: Unknown Pin: Pin P1-P?
+Add Pin To Net: Unknown Pin: Pin P2-P?
+Add Pin To Net: Unknown Pin: Pin P3-P?
+Add Pin To Net: Unknown Pin: Pin P4-P?
+Added Pin To Net: NetName=RS_485_A Pin=P5-1
+Added Pin To Net: NetName=RS_485_B Pin=P5-2
+Added Pin To Net: NetName=NetF1_2 Pin=P6-1
+Added Pin To Net: NetName=GND Pin=P6-2
+Added Pin To Net: NetName=NetF2_2 Pin=P6-3
+Added Pin To Net: NetName=CTRL_IN_ Pin=P7-1
+Added Pin To Net: NetName=STATUS_OUT_ Pin=P7-2
+Add Pin To Net: Unknown Pin: Pin P9-P?
+Add Pin To Net: Unknown Pin: Pin P10-P?
+Add Pin To Net: Unknown Pin: Pin P12-P?
+Add Pin To Net: Unknown Pin: Pin P14-P?
+Added Pin To Net: NetName=NetR11_2 Pin=U4-1
+Added Pin To Net: NetName=NetR12_2 Pin=U4-2
+Added Pin To Net: NetName=GND Pin=U4-3
+Add Class Member: Failed to add class member : Component C18 1uF
+Added Member To Class: ClassName=DE-260924 Member=Component P5 RS485
+Added Member To Class: ClassName=DE-260924 Member=Component P6 POWER
+Added Member To Class: ClassName=DE-260924 Member=Component P7 CTRL
+Added Member To Class: ClassName=DE-260924 Member=Component U4 ESDS552

@@ -1,0 +1,61 @@
+Add Component: Footprint Not Found 0805
+Add Component: Footprint Not Found 0603
+Add Component: Footprint Not Found 0603
+Add Component: Footprint Not Found 0603
+Add Component: Footprint Not Found 0603
+Add Component: Footprint Not Found 0603
+Add Component: Footprint Not Found 0603
+Add Component: Footprint Not Found 0603
+Add Component: Footprint Not Found 0805
+Add Component: Footprint Not Found 0603
+Added Component: Designator=K1(RPS 2CO 8A 24V)
+Add Component: Footprint Not Found DCK3_N
+Add Pin To Net: Unknown Pin: Pin C3-1
+Add Pin To Net: Unknown Pin: Pin C3-2
+Add Pin To Net: Unknown Pin: Pin C4-1
+Add Pin To Net: Unknown Pin: Pin C4-2
+Add Pin To Net: Unknown Pin: Pin C5-1
+Add Pin To Net: Unknown Pin: Pin C5-2
+Add Pin To Net: Unknown Pin: Pin C6-1
+Add Pin To Net: Unknown Pin: Pin C6-2
+Add Pin To Net: Unknown Pin: Pin C15-1
+Add Pin To Net: Unknown Pin: Pin C15-2
+Add Pin To Net: Unknown Pin: Pin C16-1
+Add Pin To Net: Unknown Pin: Pin C16-2
+Add Pin To Net: Unknown Pin: Pin C17-1
+Add Pin To Net: Unknown Pin: Pin C17-2
+Add Pin To Net: Unknown Pin: Pin C18-1
+Add Pin To Net: Unknown Pin: Pin C18-2
+Add Pin To Net: Unknown Pin: Pin C19-1
+Add Pin To Net: Unknown Pin: Pin C19-2
+Add Pin To Net: Unknown Pin: Pin C20-1
+Add Pin To Net: Unknown Pin: Pin C20-2
+Added Pin To Net: NetName=AC_O Pin=K1-11
+Added Pin To Net: NetName=AC_L Pin=K1-14
+Added Pin To Net: NetName=AC_O Pin=K1-21
+Added Pin To Net: NetName=AC_L Pin=K1-22
+Added Pin To Net: NetName=NetD9_2 Pin=K1-A1
+Added Pin To Net: NetName=+24V Pin=K1-A2
+Add Pin To Net: Unknown Pin: Pin P1-P?
+Add Pin To Net: Unknown Pin: Pin P2-P?
+Add Pin To Net: Unknown Pin: Pin P3-P?
+Add Pin To Net: Unknown Pin: Pin P4-P?
+Add Pin To Net: Unknown Pin: Pin P9-P?
+Add Pin To Net: Unknown Pin: Pin P10-P?
+Add Pin To Net: Unknown Pin: Pin P12-P?
+Add Pin To Net: Unknown Pin: Pin P14-P?
+Add Pin To Net: Unknown Pin: Pin U4-1
+Add Pin To Net: Unknown Pin: Pin U4-2
+Add Pin To Net: Unknown Pin: Pin U4-3
+Add Class Member: Failed to add class member : Component C3 4u7
+Add Class Member: Failed to add class member : Component C4 100nF
+Add Class Member: Failed to add class member : Component C5 1uF
+Add Class Member: Failed to add class member : Component C6 10nF
+Add Class Member: Failed to add class member : Component C15 1uF
+Add Class Member: Failed to add class member : Component C16 1uF
+Add Class Member: Failed to add class member : Component C17 1uF
+Add Class Member: Failed to add class member : Component C18 1uF
+Add Class Member: Failed to add class member : Component C19 4u7
+Add Class Member: Failed to add class member : Component C20 1uF
+Added Member To Class: ClassName=DE-260924 Member=Component K1 RPS
+Add Class Member: Failed to add class member : Component U4 ESDS552
