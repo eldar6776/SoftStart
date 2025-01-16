@@ -1,0 +1,15 @@
+../Core/Src/main.c:657:16:ReadAddressAndDelay	8	static
+../Core/Src/main.c:748:11:SOFTSTART_Listener	16	static
+../Core/Src/main.c:948:13:HandleLedBlink	16	static
+../Core/Src/main.c:726:11:STATUS_Listener	16	static
+../Core/Src/main.c:670:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:708:6:HAL_GPIO_EXTI_Callback	16	static
+../Core/Src/main.c:790:6:RS485_Init	16	static
+../Core/Src/main.c:805:6:RS485_Tick	8	static
+../Core/Src/main.c:817:6:TF_WriteImpl	8	static
+../Core/Src/main.c:841:6:HAL_UART_TxCpltCallback	0	static
+../Core/Src/main.c:849:6:HAL_UART_ErrorCallback	16	static
+../Core/Src/main.c:1027:6:Error_Handler	8	static,ignoring_inline_asm
+../Core/Src/main.c:365:6:SystemClock_Config	96	static
+../Core/Src/main.c:156:5:main	64	static
+../Core/Src/main.c:828:6:HAL_UART_RxCpltCallback	8	static
